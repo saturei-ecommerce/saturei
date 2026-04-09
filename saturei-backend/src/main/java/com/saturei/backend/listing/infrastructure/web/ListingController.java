@@ -3,9 +3,11 @@ package com.saturei.backend.listing.infrastructure.web;
 import com.saturei.backend.listing.application.ListingService;
 import com.saturei.backend.listing.application.dto.CreateListingRequest;
 import com.saturei.backend.listing.application.dto.ListingResponse;
+import com.saturei.backend.listing.application.dto.SearchListingRequest;
 import com.saturei.backend.listing.application.dto.UpdateListingRequest;
 import com.saturei.backend.listing.application.dto.UpdateStatusRequest;
 import jakarta.validation.Valid;
+import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,18 @@ import java.util.UUID;
 public class ListingController {
 
     private final ListingService listingService;
+
+    @GetMapping
+    public ResponseEntity<Page<ListingResponse>> search(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice,
+            Pageable pageable) {
+        var request = new SearchListingRequest(keyword, category, location, minPrice, maxPrice);
+        return ResponseEntity.ok(listingService.search(request, pageable));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ListingResponse> getById(@PathVariable UUID id) {

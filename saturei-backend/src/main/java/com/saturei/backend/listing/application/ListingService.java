@@ -2,6 +2,7 @@ package com.saturei.backend.listing.application;
 
 import com.saturei.backend.listing.application.dto.CreateListingRequest;
 import com.saturei.backend.listing.application.dto.ListingResponse;
+import com.saturei.backend.listing.application.dto.SearchListingRequest;
 import com.saturei.backend.listing.application.dto.UpdateListingRequest;
 import com.saturei.backend.listing.domain.Listing;
 import com.saturei.backend.listing.domain.ListingRepository;
@@ -79,6 +80,18 @@ public class ListingService {
     public Page<ListingResponse> listBySeller(UUID sellerId, Pageable pageable) {
         return listingRepository.findBySellerId(sellerId, pageable)
                 .map(ListingResponse::from);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ListingResponse> search(SearchListingRequest request, Pageable pageable) {
+        return listingRepository.search(
+                request.keyword(),
+                request.category(),
+                request.location(),
+                request.minPrice(),
+                request.maxPrice(),
+                pageable
+        ).map(ListingResponse::from);
     }
 
     private Listing getOwnedListing(UUID id, UUID sellerId) {
