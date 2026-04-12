@@ -30,9 +30,9 @@ spring boot rest api for the saturei marketplace (java 17, postgresql)
 * [ ] review bounded context (post-transaction rating) — arthur
 
 ### tests
-* [ ] listingservice unit tests (crud, status, ownership) — lucas
-* [ ] imageservice unit tests (resize, validation, upload) — lucas
-* [ ] orderservice unit tests (checkout, cancellation, price locking) — lucas
+* [x] listingservice unit tests (crud, status, ownership) — lucas
+* [x] imageservice unit tests (resize, validation, upload) — lucas
+* [x] orderservice unit tests (checkout, cancellation, price locking) — lucas
 * [ ] listingrepository integration tests (search query filters) — santana
 * [ ] userservice unit tests (register, login) — arthur
 * [ ] reviewservice unit tests (create, duplicate prevention) — arthur
@@ -43,6 +43,6 @@ spring boot rest api for the saturei marketplace (java 17, postgresql)
 * [ ] dockerfile — santana
 * [ ] docker-compose (app + postgres) — santana
 * [ ] .env.example with required environment variables — santana
-* [ ] github actions — ci (build + test on pull request) — lucas
+* [x] github actions — ci (build + test on pull request) — lucas
 * [ ] github actions — cd (deploy on push to main) — joao
 * [ ] health check endpoint via actuator — arthur
