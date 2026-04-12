@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -84,14 +85,29 @@ public class ListingService {
 
     @Transactional(readOnly = true)
     public Page<ListingResponse> search(SearchListingRequest request, Pageable pageable) {
+        // Normalize blank strings to null so JPQL (:param IS NULL) works correctly
+        String keyword  = blankToNull(request.keyword());
+        String category = blankToNull(request.category());
+        String location = blankToNull(request.location());
+
         return listingRepository.search(
-                request.keyword(),
-                request.category(),
-                request.location(),
+                keyword,
+                category,
+                location,
                 request.minPrice(),
                 request.maxPrice(),
                 pageable
         ).map(ListingResponse::from);
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> getCategories() {
+        return listingRepository.findDistinctCategories();
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> getLocations() {
+        return listingRepository.findDistinctLocations();
     }
 
     private Listing getOwnedListing(UUID id, UUID sellerId) {
@@ -101,5 +117,9 @@ public class ListingService {
             throw ApiException.forbidden("you do not own this listing");
         }
         return listing;
+    }
+
+    private String blankToNull(String value) {
+        return (value == null || value.isBlank()) ? null : value;
     }
 }

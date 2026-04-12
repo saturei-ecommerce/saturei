@@ -8,9 +8,12 @@ import com.saturei.backend.listing.application.dto.UpdateListingRequest;
 import com.saturei.backend.listing.application.dto.UpdateStatusRequest;
 import jakarta.validation.Valid;
 import java.math.BigDecimal;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,11 @@ public class ListingController {
 
     private final ListingService listingService;
 
+    /**
+     * Public search endpoint — no authentication required.
+     * Supports: keyword, category, location, minPrice, maxPrice, page, size, sort.
+     * Default sort: createdAt,desc
+     */
     @GetMapping
     public ResponseEntity<Page<ListingResponse>> search(
             @RequestParam(required = false) String keyword,
@@ -31,9 +39,30 @@ public class ListingController {
             @RequestParam(required = false) String location,
             @RequestParam(required = false) BigDecimal minPrice,
             @RequestParam(required = false) BigDecimal maxPrice,
-            Pageable pageable) {
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size,
+            @RequestParam(defaultValue = "createdAt,desc") String sort) {
+
+        // Parse sort param in format "field,direction"
+        Pageable pageable = parsePageable(page, size, sort);
         var request = new SearchListingRequest(keyword, category, location, minPrice, maxPrice);
         return ResponseEntity.ok(listingService.search(request, pageable));
+    }
+
+    /**
+     * Returns distinct categories of active listings — for populating the filter dropdown.
+     */
+    @GetMapping("/categories")
+    public ResponseEntity<List<String>> getCategories() {
+        return ResponseEntity.ok(listingService.getCategories());
+    }
+
+    /**
+     * Returns distinct locations of active listings — for populating the filter dropdown.
+     */
+    @GetMapping("/locations")
+    public ResponseEntity<List<String>> getLocations() {
+        return ResponseEntity.ok(listingService.getLocations());
     }
 
     @GetMapping("/{id}")
@@ -74,5 +103,16 @@ public class ListingController {
         UUID sellerId = UUID.randomUUID();
         listingService.delete(id, sellerId);
         return ResponseEntity.noContent().build();
+    }
+
+    private Pageable parsePageable(int page, int size, String sort) {
+        // Clamp size to avoid abuse
+        int clampedSize = Math.min(Math.max(size, 1), 50);
+        String[] parts = sort.split(",");
+        if (parts.length == 2) {
+            Sort.Direction dir = "asc".equalsIgnoreCase(parts[1]) ? Sort.Direction.ASC : Sort.Direction.DESC;
+            return PageRequest.of(page, clampedSize, Sort.by(dir, parts[0]));
+        }
+        return PageRequest.of(page, clampedSize, Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 }
