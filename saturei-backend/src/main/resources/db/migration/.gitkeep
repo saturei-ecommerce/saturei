@@ -1,0 +1,4 @@
+-- Flyway migration placeholder
+-- Migration scripts go here following the naming convention:
+-- V{version}__{description}.sql
+-- Example: V1__create_users_table.sql
