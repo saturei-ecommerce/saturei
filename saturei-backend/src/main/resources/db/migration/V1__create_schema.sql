@@ -20,6 +20,15 @@ CREATE TABLE users (
     CONSTRAINT uq_users_email UNIQUE (email)
 );
 
+CREATE TABLE user_permissions (
+    user_id UUID NOT NULL,
+    permissions VARCHAR(50) NOT NULL,
+
+    CONSTRAINT fk_user_permissions_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
 -- ============================================================
 -- LISTINGS
 -- ============================================================

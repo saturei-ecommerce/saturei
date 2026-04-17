@@ -39,6 +39,10 @@ public class User implements UserDetails {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @ElementCollection(targetClass = UserPermissions.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_permissions", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "permissions")
     private List<UserPermissions> permissions = new ArrayList<>();
 
     @PrePersist
