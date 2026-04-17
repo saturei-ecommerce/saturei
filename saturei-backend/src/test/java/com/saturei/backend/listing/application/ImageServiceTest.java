@@ -1,9 +1,9 @@
 package com.saturei.backend.listing.application;
 
 import com.saturei.backend.listing.domain.Listing;
-import com.saturei.backend.listing.domain.ListingRepository;
 import com.saturei.backend.listing.domain.ListingStatus;
 import com.saturei.backend.listing.domain.vo.ConservationState;
+import com.saturei.backend.listing.infrastructure.persistence.JpaListingRepository;
 import com.saturei.backend.shared.exception.ApiException;
 import com.saturei.backend.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +35,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ImageServiceTest {
 
-    @Mock ListingRepository listingRepository;
+    @Mock
+    JpaListingRepository listingRepository;
     @InjectMocks ImageService imageService;
 
     @TempDir Path tempDir;

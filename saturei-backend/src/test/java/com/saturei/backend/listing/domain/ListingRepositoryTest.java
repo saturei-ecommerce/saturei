@@ -1,6 +1,7 @@
 package com.saturei.backend.listing.domain;
 
 import com.saturei.backend.listing.domain.vo.ConservationState;
+import com.saturei.backend.listing.infrastructure.persistence.JpaListingRepository;
 import com.saturei.backend.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ class ListingRepositoryTest {
     TestEntityManager em;
 
     @Autowired
-    ListingRepository listingRepository;
+    JpaListingRepository listingRepository;
 
     private User seller;
     private Pageable pageable;

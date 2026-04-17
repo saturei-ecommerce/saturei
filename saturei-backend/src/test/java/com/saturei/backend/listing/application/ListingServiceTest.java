@@ -5,12 +5,12 @@ import com.saturei.backend.listing.application.dto.ListingResponse;
 import com.saturei.backend.listing.application.dto.SearchListingRequest;
 import com.saturei.backend.listing.application.dto.UpdateListingRequest;
 import com.saturei.backend.listing.domain.Listing;
-import com.saturei.backend.listing.domain.ListingRepository;
 import com.saturei.backend.listing.domain.ListingStatus;
 import com.saturei.backend.listing.domain.vo.ConservationState;
+import com.saturei.backend.listing.infrastructure.persistence.JpaListingRepository;
 import com.saturei.backend.shared.exception.ApiException;
 import com.saturei.backend.user.domain.User;
-import com.saturei.backend.user.domain.UserRepository;
+import com.saturei.backend.user.infrastructure.persistence.JpaUserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,8 +33,10 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ListingServiceTest {
 
-    @Mock ListingRepository listingRepository;
-    @Mock UserRepository userRepository;
+    @Mock
+    JpaListingRepository listingRepository;
+    @Mock
+    JpaUserRepository userRepository;
     @InjectMocks ListingService listingService;
 
     private User seller(UUID id) {
