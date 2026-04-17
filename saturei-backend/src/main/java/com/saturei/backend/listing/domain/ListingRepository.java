@@ -2,7 +2,6 @@ package com.saturei.backend.listing.domain;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -10,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-public interface ListingRepository extends JpaRepository<Listing, UUID> {
+public interface ListingRepository {
 
     @Query("SELECT l FROM Listing l JOIN FETCH l.seller WHERE l.seller.id = :sellerId")
     Page<Listing> findBySellerId(@Param("sellerId") UUID sellerId, Pageable pageable);

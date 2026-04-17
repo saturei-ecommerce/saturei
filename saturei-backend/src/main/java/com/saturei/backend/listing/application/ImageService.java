@@ -1,6 +1,6 @@
 package com.saturei.backend.listing.application;
 
-import com.saturei.backend.listing.domain.ListingRepository;
+import com.saturei.backend.listing.infrastructure.persistence.JpaListingRepository;
 import com.saturei.backend.shared.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +32,7 @@ public class ImageService {
 
     @Transactional
     public List<String> uploadToListing(UUID listingId, List<MultipartFile> files, UUID sellerId,
-                                        ListingRepository listingRepository) {
+                                        JpaListingRepository listingRepository) {
         var listing = listingRepository.findById(listingId)
                 .orElseThrow(() -> ApiException.notFound("listing not found"));
 

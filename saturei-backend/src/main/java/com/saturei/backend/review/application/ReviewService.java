@@ -1,6 +1,6 @@
 package com.saturei.backend.review.application;
 
-import com.saturei.backend.review.domain.ReviewRepository;
+import com.saturei.backend.review.infrastructure.persistence.JpaReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ReviewService {
 
-    private final ReviewRepository reviewRepository;
+    private final JpaReviewRepository reviewRepository;
 
     // TODO: implement create, listByUser
 }

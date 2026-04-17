@@ -1,15 +1,15 @@
 package com.saturei.backend.order.application;
 
-import com.saturei.backend.listing.domain.ListingRepository;
 import com.saturei.backend.listing.domain.ListingStatus;
+import com.saturei.backend.listing.infrastructure.persistence.JpaListingRepository;
 import com.saturei.backend.order.application.dto.CreateOrderRequest;
 import com.saturei.backend.order.application.dto.OrderResponse;
 import com.saturei.backend.order.domain.Order;
 import com.saturei.backend.order.domain.OrderItem;
-import com.saturei.backend.order.domain.OrderRepository;
 import com.saturei.backend.order.domain.vo.OrderStatus;
+import com.saturei.backend.order.infrastructure.persistence.JpaOrderRepository;
 import com.saturei.backend.shared.exception.ApiException;
-import com.saturei.backend.user.domain.UserRepository;
+import com.saturei.backend.user.infrastructure.persistence.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +24,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
-    private final ListingRepository listingRepository;
-    private final PaymentGatewayPort paymentGateway;
+    private final JpaOrderRepository orderRepository;
+    private final JpaUserRepository userRepository;
+    private final JpaListingRepository listingRepository;
+    private final PaymentGatewayPortImpl paymentGateway;
 
     @Transactional
     public OrderResponse create(CreateOrderRequest request, UUID buyerId) {

@@ -1,6 +1,6 @@
 package com.saturei.backend.user.application;
 
-import com.saturei.backend.user.domain.UserRepository;
+import com.saturei.backend.user.infrastructure.persistence.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final JpaUserRepository userRepository;
 
     // TODO: implement register, login, getProfile
 }

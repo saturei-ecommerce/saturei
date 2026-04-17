@@ -15,10 +15,10 @@ spring boot rest api for the saturei marketplace (java 17, postgresql)
 * [ ] seed data for local development — arthur
 
 ### security
-* [ ] jwt authentication (filter, provider, token generation) — joao
+* [x] jwt authentication (filter, provider, token generation) — joao
 * [ ] spring security configuration (cors, csrf, protected routes) — joao
 * [ ] password encryption (bcrypt) — arthur
-* [ ] refresh token support — joao
+* [x] refresh token support — joao
 
 ### bounded contexts
 * [ ] user bounded context (entity, repository, service) — arthur

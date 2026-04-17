@@ -5,10 +5,10 @@ import com.saturei.backend.listing.application.dto.ListingResponse;
 import com.saturei.backend.listing.application.dto.SearchListingRequest;
 import com.saturei.backend.listing.application.dto.UpdateListingRequest;
 import com.saturei.backend.listing.domain.Listing;
-import com.saturei.backend.listing.domain.ListingRepository;
 import com.saturei.backend.listing.domain.ListingStatus;
+import com.saturei.backend.listing.infrastructure.persistence.JpaListingRepository;
 import com.saturei.backend.shared.exception.ApiException;
-import com.saturei.backend.user.domain.UserRepository;
+import com.saturei.backend.user.infrastructure.persistence.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,8 +22,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ListingService {
 
-    private final ListingRepository listingRepository;
-    private final UserRepository userRepository;
+    private final JpaListingRepository listingRepository;
+    private final JpaUserRepository userRepository;
 
     @Transactional
     public ListingResponse create(CreateListingRequest request, UUID sellerId) {

@@ -1,7 +1,7 @@
 package com.saturei.backend.listing.infrastructure.web;
 
 import com.saturei.backend.listing.application.ImageService;
-import com.saturei.backend.listing.domain.ListingRepository;
+import com.saturei.backend.listing.infrastructure.persistence.JpaListingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import java.util.UUID;
 public class ImageController {
 
     private final ImageService imageService;
-    private final ListingRepository listingRepository;
+    private final JpaListingRepository listingRepository;
 
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<List<String>> upload(@PathVariable UUID id,
