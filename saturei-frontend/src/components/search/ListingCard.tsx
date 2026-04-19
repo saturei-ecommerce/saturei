@@ -1,18 +1,17 @@
 'use client'
 
-import { Clock, MapPin, Tag, User } from 'lucide-react'
+import { Clock, MapPin, MessageCircle, Tag, User } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import type { ListingResponse } from '@/lib/api/listings'
 
-// ─── Skeleton ─────────────────────────────────────────────────
+// Skeleton
 
 export function ListingCardSkeleton() {
   return (
     <div className="bg-card rounded-2xl overflow-hidden border border-border shadow-sm">
-      {/* Image */}
       <div className="skeleton h-52 w-full" />
-      {/* Body */}
       <div className="p-4 flex flex-col gap-3">
         <div className="skeleton h-4 w-16 rounded-full" />
         <div className="skeleton h-5 w-4/5 rounded-lg" />
@@ -27,15 +26,17 @@ export function ListingCardSkeleton() {
   )
 }
 
-// ─── Card ─────────────────────────────────────────────────────
+//Cards
 
 interface ListingCardProps {
   listing: ListingResponse
 }
 
 export function ListingCard({ listing }: ListingCardProps) {
+  const router = useRouter()
   const {
     id,
+    sellerId,
     title,
     price,
     category,
@@ -45,6 +46,18 @@ export function ListingCard({ listing }: ListingCardProps) {
     sellerName,
     createdAt,
   } = listing
+
+  const handleChatClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const params = new URLSearchParams({
+      listingId: id,
+      sellerId: sellerId ?? '',
+      sellerName: sellerName,
+      listingTitle: title,
+    })
+    router.push(`/chat?${params.toString()}`)
+  }
 
   const hasImage = imageUrls && imageUrls.length > 0
   const formattedPrice = new Intl.NumberFormat('pt-BR', {
@@ -59,14 +72,14 @@ export function ListingCard({ listing }: ListingCardProps) {
       href={`/listings/${id}`}
       id={`listing-card-${id}`}
       className="
-        group block bg-card rounded-2xl overflow-hidden
+        group flex flex-col h-full bg-card rounded-2xl overflow-hidden
         border border-border
         shadow-sm card-hover
         focus:outline-none focus-visible:ring-2 focus-visible:ring-primary
       "
     >
       {/* Image section */}
-      <div className="relative h-52 bg-muted overflow-hidden">
+      <div className="relative h-52 shrink-0 bg-muted overflow-hidden">
         {hasImage ? (
           <Image
             src={imageUrls[0]}
@@ -105,9 +118,7 @@ export function ListingCard({ listing }: ListingCardProps) {
         )}
       </div>
 
-      {/* Card Body */}
-      <div className="p-4 flex flex-col gap-2">
-        {/* Category */}
+      <div className="p-4 flex flex-col flex-1 gap-2">
         {category && (
           <div className="flex items-center gap-1.5 text-primary text-xs font-semibold">
             <Tag size={12} strokeWidth={2.5} />
@@ -115,39 +126,52 @@ export function ListingCard({ listing }: ListingCardProps) {
           </div>
         )}
 
-        {/* Title */}
         <h2 className="text-foreground font-semibold text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors duration-150">
           {title}
         </h2>
 
-        {/* Price */}
         <div className="text-primary font-bold text-xl tracking-tight mt-0.5">
           {formattedPrice}
         </div>
 
-        {/* Meta row */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-muted-foreground text-[11px]">
+        <div className="flex items-center gap-2 mt-auto pt-2 text-muted-foreground text-[11px] overflow-hidden">
           {location && (
-            <span className="flex items-center gap-1">
-              <MapPin size={11} strokeWidth={2} />
-              {location}
+            <span className="flex items-center gap-1 truncate">
+              <MapPin size={11} strokeWidth={2} className="shrink-0" />
+              <span className="truncate">{location}</span>
             </span>
           )}
-          <span className="flex items-center gap-1">
-            <User size={11} strokeWidth={2} />
-            {sellerName}
+          <span className="flex items-center gap-1 truncate">
+            <User size={11} strokeWidth={2} className="shrink-0" />
+            <span className="truncate">{sellerName}</span>
           </span>
-          <span className="flex items-center gap-1 ml-auto">
-            <Clock size={11} strokeWidth={2} />
+          <span className="flex items-center gap-1 ml-auto shrink-0">
+            <Clock size={11} strokeWidth={2} className="shrink-0" />
             {timeAgo}
           </span>
         </div>
+
+        <button
+          id={`chat-btn-${id}`}
+          type="button"
+          onClick={handleChatClick}
+          className="
+            mt-3 w-full flex items-center justify-center gap-2
+            px-3 py-2 rounded-xl text-xs font-semibold
+            border border-primary/30 text-primary bg-primary/5
+            hover:bg-primary hover:text-primary-foreground hover:border-primary
+            active:scale-95 transition-all duration-150
+          "
+        >
+          <MessageCircle size={13} strokeWidth={2.5} />
+          Contatar Vendedor
+        </button>
       </div>
     </Link>
   )
 }
 
-// ─── Helpers ──────────────────────────────────────────────────
+// Helpers
 
 function formatTimeAgo(isoDate: string): string {
   const diff = Date.now() - new Date(isoDate).getTime()

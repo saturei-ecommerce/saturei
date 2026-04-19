@@ -1,6 +1,6 @@
 'use client'
 
-import { Search, Sparkles } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { Suspense } from 'react'
 import { FilterPanel } from '@/components/search/FilterPanel'
 import { ListingGrid } from '@/components/search/ListingGrid'
@@ -57,9 +57,6 @@ function SearchPageClient() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-8">
           {/* Brand row */}
           <div className="flex items-center gap-2 mb-6">
-            <div className="w-8 h-8 rounded-lg bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center">
-              <Sparkles size={16} className="text-secondary" />
-            </div>
             <span className="text-primary-foreground/80 font-semibold text-sm tracking-wide">
               Saturei Marketplace
             </span>
@@ -70,7 +67,7 @@ function SearchPageClient() {
             Encontre o que você procura
           </h1>
           <p className="text-primary-foreground/70 text-base mb-8">
-            Explore milhares de anúncios com filtros poderosos
+            Explore milhares de anúncios de todos os tipos!
           </p>
 
           {/* Search Bar */}
@@ -167,6 +164,7 @@ function SearchPageClient() {
               isLoading={isLoading}
               isFetching={isFetching}
               hasActiveFilters={hasActiveFilters}
+              filters={filters}
             />
 
             {/* Pagination */}
