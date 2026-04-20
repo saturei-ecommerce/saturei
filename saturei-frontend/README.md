@@ -5,7 +5,7 @@ next.js web client for the saturei marketplace
 
 ### pages & features
 * [x] authentication pages (login, register) — richard
-* [ ] social login (google/github via next-auth) — richard
+* [x] social login (google/github via next-auth) — richard
 * [ ] listing creation form (title, description, photos, condition, price) — pedro
 * [ ] listing management page (edit, pause, delete) — pedro
 * [x] search page with filters (keyword, price range, location, category) — vini hen
