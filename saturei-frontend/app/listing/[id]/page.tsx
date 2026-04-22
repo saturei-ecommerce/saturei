@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 export default async function ListingDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: { id: string }
 }) {
-  const { id } = await params
+  const { id } = params
 
   try {
     const listing = await fetchListingById(id)
