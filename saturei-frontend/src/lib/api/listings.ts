@@ -17,6 +17,7 @@ export interface ListingResponse {
   id: string
   sellerId: string
   sellerName: string
+  sellerRating?: number
   title: string
   description: string | null
   price: number

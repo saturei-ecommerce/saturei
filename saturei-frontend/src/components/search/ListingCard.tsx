@@ -69,7 +69,7 @@ export function ListingCard({ listing }: ListingCardProps) {
 
   return (
     <Link
-      href={`/listings/${id}`}
+      href={`/listing/${id}`}
       id={`listing-card-${id}`}
       className="
         group flex flex-col h-full bg-card rounded-2xl overflow-hidden
