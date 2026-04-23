@@ -1,12 +1,12 @@
-'use client'
+"use client";
 
-import { Search } from 'lucide-react'
-import { Suspense } from 'react'
-import { FilterPanel } from '@/components/search/FilterPanel'
-import { ListingGrid } from '@/components/search/ListingGrid'
-import { Pagination } from '@/components/search/Pagination'
-import { SearchBar } from '@/components/search/SearchBar'
-import { useListingSearch } from '@/hooks/useListingSearch'
+import { Search } from "lucide-react";
+import { Suspense } from "react";
+import { FilterPanel } from "@/components/search/FilterPanel";
+import { ListingGrid } from "@/components/search/ListingGrid";
+import { Pagination } from "@/components/search/Pagination";
+import { SearchBar } from "@/components/search/SearchBar";
+import { useListingSearch } from "@/hooks/useListingSearch";
 
 // ─── SearchPageClient needs Suspense boundary because of useSearchParams ──
 
@@ -15,7 +15,7 @@ export function SearchPageClientWrapper() {
     <Suspense fallback={<SearchPageSkeleton />}>
       <SearchPageClient />
     </Suspense>
-  )
+  );
 }
 
 function SearchPageClient() {
@@ -34,7 +34,7 @@ function SearchPageClient() {
     isFetching,
     categories,
     locations,
-  } = useListingSearch()
+  } = useListingSearch();
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -44,25 +44,17 @@ function SearchPageClient() {
         <div
           className="absolute -top-16 -right-16 w-80 h-80 rounded-full opacity-10"
           style={{
-            background: 'radial-gradient(circle, #fb8917 0%, transparent 70%)',
+            background: "radial-gradient(circle, #fb8917 0%, transparent 70%)",
           }}
         />
         <div
           className="absolute -bottom-10 -left-10 w-64 h-64 rounded-full opacity-10"
           style={{
-            background: 'radial-gradient(circle, #fff 0%, transparent 70%)',
+            background: "radial-gradient(circle, #fff 0%, transparent 70%)",
           }}
         />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-8">
-          {/* Brand row */}
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-primary-foreground/80 font-semibold text-sm tracking-wide">
-              Saturei Marketplace
-            </span>
-          </div>
-
-          {/* Title */}
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2">
             Encontre o que você procura
           </h1>
@@ -73,7 +65,7 @@ function SearchPageClient() {
           {/* Search Bar */}
           <div className="max-w-2xl">
             <SearchBar
-              value={filters.keyword ?? ''}
+              value={filters.keyword ?? ""}
               onChange={setKeyword}
               placeholder="Buscar por produto, categoria…"
             />
@@ -150,9 +142,9 @@ function SearchPageClient() {
             {hasActiveFilters && (
               <ActiveFilterChips
                 filters={filters}
-                onRemoveKeyword={() => setKeyword('')}
-                onRemoveCategory={() => setCategory('')}
-                onRemoveLocation={() => setLocation('')}
+                onRemoveKeyword={() => setKeyword("")}
+                onRemoveCategory={() => setCategory("")}
+                onRemoveLocation={() => setLocation("")}
                 onRemoveMinPrice={() => setMinPrice(undefined)}
                 onRemoveMaxPrice={() => setMaxPrice(undefined)}
               />
@@ -175,8 +167,8 @@ function SearchPageClient() {
                 totalElements={listings.totalElements}
                 pageSize={listings.size}
                 onPageChange={(page) => {
-                  setPage(page)
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                  setPage(page);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               />
             )}
@@ -198,18 +190,18 @@ function SearchPageClient() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
 // ─── Active filter chips ──────────────────────────────────────
 
 interface ActiveChipsProps {
-  filters: ReturnType<typeof useListingSearch>['filters']
-  onRemoveKeyword: () => void
-  onRemoveCategory: () => void
-  onRemoveLocation: () => void
-  onRemoveMinPrice: () => void
-  onRemoveMaxPrice: () => void
+  filters: ReturnType<typeof useListingSearch>["filters"];
+  onRemoveKeyword: () => void;
+  onRemoveCategory: () => void;
+  onRemoveLocation: () => void;
+  onRemoveMinPrice: () => void;
+  onRemoveMaxPrice: () => void;
 }
 
 function ActiveFilterChips({
@@ -221,28 +213,28 @@ function ActiveFilterChips({
   onRemoveMaxPrice,
 }: ActiveChipsProps) {
   const fmt = (n: number) =>
-    new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(n)
+    new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(n);
 
-  const chips: { label: string; onRemove: () => void }[] = []
+  const chips: { label: string; onRemove: () => void }[] = [];
   if (filters.keyword)
-    chips.push({ label: `"${filters.keyword}"`, onRemove: onRemoveKeyword })
+    chips.push({ label: `"${filters.keyword}"`, onRemove: onRemoveKeyword });
   if (filters.category)
-    chips.push({ label: filters.category, onRemove: onRemoveCategory })
+    chips.push({ label: filters.category, onRemove: onRemoveCategory });
   if (filters.location)
-    chips.push({ label: filters.location, onRemove: onRemoveLocation })
+    chips.push({ label: filters.location, onRemove: onRemoveLocation });
   if (filters.minPrice != null)
     chips.push({
       label: `Mín: ${fmt(filters.minPrice)}`,
       onRemove: onRemoveMinPrice,
-    })
+    });
   if (filters.maxPrice != null)
     chips.push({
       label: `Máx: ${fmt(filters.maxPrice)}`,
       onRemove: onRemoveMaxPrice,
-    })
+    });
 
   return (
     <div className="flex flex-wrap gap-2 animate-fade-in">
@@ -265,7 +257,7 @@ function ActiveFilterChips({
         </button>
       ))}
     </div>
-  )
+  );
 }
 
 // ─── Loading skeleton for suspense fallback ───────────────────
@@ -286,5 +278,5 @@ function SearchPageSkeleton() {
         </div>
       </div>
     </div>
-  )
+  );
 }
