@@ -12,7 +12,7 @@ spring boot rest api for the saturei marketplace (java 17, postgresql)
 * [x] postgresql datasource and jpa configuration — santana
 * [x] flyway migrations setup — santana
 * [x] initial schema migration (users, listings, orders, messages, reviews) — santana
-* [ ] seed data for local development — arthur
+* [x] seed data for local development — arthur
 
 ### security
 * [x] jwt authentication (filter, provider, token generation) — joao
