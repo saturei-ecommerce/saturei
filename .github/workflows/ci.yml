@@ -5,6 +5,7 @@ on:
     branches: [main]
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   build-and-test:
@@ -23,3 +24,15 @@ jobs:
       - name: build and test
         run: mvn --batch-mode verify
         working-directory: saturei-backend
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    environment: production
+
+    steps:
+      - name: trigger render deploy
+        run: curl --fail -X POST "$RENDER_DEPLOY_HOOK_URL"
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
