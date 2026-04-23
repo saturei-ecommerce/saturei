@@ -1,8 +1,8 @@
 'use client'
 
+import { Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { formatBRL } from '@/lib/formatters/currency'
 import { useCartStore } from '@/stores/cart'
@@ -19,6 +19,7 @@ export function CartPageClient() {
     setMounted(true)
   }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: no problem
   const formattedTotal = useMemo(
     () => formatBRL(totalPrice()),
     [totalPrice, items],
@@ -112,7 +113,9 @@ export function CartPageClient() {
                     />
                   ) : (
                     <div className="h-full w-full flex items-center justify-center">
-                      <span className="text-3xl opacity-25 select-none">📦</span>
+                      <span className="text-3xl opacity-25 select-none">
+                        📦
+                      </span>
                     </div>
                   )}
                 </div>

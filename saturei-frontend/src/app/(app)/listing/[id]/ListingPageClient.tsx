@@ -67,7 +67,10 @@ export function ListingPageClient({ listing }: { listing: ListingResponse }) {
               </button>
             </div>
 
-            <SellerInfo name={listing.sellerName} rating={listing.sellerRating} />
+            <SellerInfo
+              name={listing.sellerName}
+              rating={listing.sellerRating}
+            />
           </aside>
         </div>
       </main>

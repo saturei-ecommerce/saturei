@@ -4,7 +4,10 @@ import { ShoppingBag } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
-import { CheckoutForm, type CheckoutValues } from '@/components/checkout/CheckoutForm'
+import {
+  CheckoutForm,
+  type CheckoutValues,
+} from '@/components/checkout/CheckoutForm'
 import { OrderSummary } from '@/components/checkout/OrderSummary'
 import { useCartStore } from '@/stores/cart'
 

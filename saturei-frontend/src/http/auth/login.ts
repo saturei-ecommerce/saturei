@@ -6,7 +6,7 @@ export interface LoginRequest {
 }
 
 interface LoginResponse {
-  token: string
+  accessToken: string
 }
 
 export async function login({

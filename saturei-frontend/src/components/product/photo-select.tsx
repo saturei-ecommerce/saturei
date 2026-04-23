@@ -1,6 +1,6 @@
-import { Camera, X } from "lucide-react";
-import Image from "next/image";
-import { useRef } from "react";
+import { Camera, X } from 'lucide-react'
+import Image from 'next/image'
+import { useRef } from 'react'
 
 function PhotoSlot({
   index,
@@ -10,15 +10,15 @@ function PhotoSlot({
   onRemove,
   fileRef,
 }: PhotoSlotProps) {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => onAdd(index, ev.target?.result as string);
-    reader.readAsDataURL(file);
-  };
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (ev) => onAdd(index, ev.target?.result as string)
+    reader.readAsDataURL(file)
+  }
 
   return (
     <div className={`relative ${height} w-full group`}>
@@ -32,8 +32,8 @@ function PhotoSlot({
           accept="image/*"
           className="hidden"
           ref={(el) => {
-            inputRef.current = el;
-            fileRef(el);
+            inputRef.current = el
+            fileRef(el)
           }}
           onChange={handleChange}
         />
@@ -56,8 +56,8 @@ function PhotoSlot({
         <button
           type="button"
           onClick={(e) => {
-            e.stopPropagation();
-            onRemove(index);
+            e.stopPropagation()
+            onRemove(index)
           }}
           className="absolute top-1 right-1 z-10 bg-black/60 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
         >
@@ -65,7 +65,7 @@ function PhotoSlot({
         </button>
       )}
     </div>
-  );
+  )
 }
 
-export { PhotoSlot };
+export { PhotoSlot }

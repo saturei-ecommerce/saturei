@@ -3,16 +3,16 @@
 import {
   ArrowLeft,
   MessageCircle,
+  Package,
+  Search,
   Send,
   Wifi,
-  Search,
-  Package,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useRef, useState, Suspense } from 'react'
-import { useChat } from '@/hooks/useChat'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import type { Conversation } from '@/hooks/useChat'
+import { useChat } from '@/hooks/useChat'
 
 export function ChatPageClientWrapper() {
   return (
@@ -35,19 +35,32 @@ function ChatPageClient() {
   const [inputValue, setInputValue] = useState('')
   const [mobileShowChat, setMobileShowChat] = useState(false)
 
-  const { conversations, messages, connected, demoMode, sendMessage, startConversation } =
-    useChat({ conversationId: activeConvId })
+  const {
+    conversations,
+    messages,
+    connected,
+    demoMode,
+    sendMessage,
+    startConversation,
+  } = useChat({ conversationId: activeConvId })
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: no problem
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: no problem
   useEffect(() => {
     if (urlListingId && urlSellerId) {
-      const id = startConversation(urlListingId, urlListingTitle, urlSellerId, urlSellerName)
+      const id = startConversation(
+        urlListingId,
+        urlListingTitle,
+        urlSellerId,
+        urlSellerName,
+      )
       setActiveConvId(id)
       setMobileShowChat(true)
     }
@@ -110,7 +123,9 @@ function ChatPageClient() {
         {connected && (
           <div className="flex items-center gap-2 px-4 py-2 bg-primary/5 border-b border-border">
             <Wifi size={12} className="text-primary" />
-            <span className="text-[11px] text-primary font-medium">Conectado em tempo real</span>
+            <span className="text-[11px] text-primary font-medium">
+              Conectado em tempo real
+            </span>
           </div>
         )}
 
@@ -236,7 +251,8 @@ function ChatPageClient() {
                     <MessageCircle size={28} className="text-primary" />
                   </div>
                   <p className="text-sm text-muted-foreground max-w-xs">
-                    Inicie a conversa! Pergunte sobre disponibilidade, preço ou condição do produto.
+                    Inicie a conversa! Pergunte sobre disponibilidade, preço ou
+                    condição do produto.
                   </p>
                 </div>
               )}
@@ -354,14 +370,25 @@ function ConversationItem({
   )
 }
 
-function MessageBubble({ message }: { message: { content: string; senderName: string; sentAt: string; isOwn: boolean } }) {
+function MessageBubble({
+  message,
+}: {
+  message: {
+    content: string
+    senderName: string
+    sentAt: string
+    isOwn: boolean
+  }
+}) {
   const time = new Date(message.sentAt).toLocaleTimeString('pt-BR', {
     hour: '2-digit',
     minute: '2-digit',
   })
 
   return (
-    <div className={`flex flex-col ${message.isOwn ? 'items-end' : 'items-start'}`}>
+    <div
+      className={`flex flex-col ${message.isOwn ? 'items-end' : 'items-start'}`}
+    >
       {!message.isOwn && (
         <span className="text-[10px] text-muted-foreground mb-1 ml-1">
           {message.senderName}
@@ -379,7 +406,9 @@ function MessageBubble({ message }: { message: { content: string; senderName: st
       >
         {message.content}
       </div>
-      <span className={`text-[10px] text-muted-foreground mt-1 ${message.isOwn ? 'mr-1' : 'ml-1'}`}>
+      <span
+        className={`text-[10px] text-muted-foreground mt-1 ${message.isOwn ? 'mr-1' : 'ml-1'}`}
+      >
         {time}
       </span>
     </div>

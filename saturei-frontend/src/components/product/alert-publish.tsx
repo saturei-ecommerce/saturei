@@ -1,10 +1,10 @@
-import { Check, Loader2 } from "lucide-react";
-import { AlertDialog } from "radix-ui";
+import { Check, Loader2 } from 'lucide-react'
+import { AlertDialog } from 'radix-ui'
 
 interface ConfirmPublishDialogProps {
-  onConfirm: () => void;
-  disabled?: boolean;
-  isLoading?: boolean;
+  onConfirm: () => void
+  disabled?: boolean
+  isLoading?: boolean
 }
 
 function ConfirmPublishDialog({
@@ -26,7 +26,7 @@ function ConfirmPublishDialog({
               enviando...
             </>
           ) : (
-            "publicar anúncio"
+            'publicar anúncio'
           )}
         </button>
       </AlertDialog.Trigger>
@@ -70,7 +70,7 @@ function ConfirmPublishDialog({
         </AlertDialog.Content>
       </AlertDialog.Portal>
     </AlertDialog.Root>
-  );
+  )
 }
 
-export { ConfirmPublishDialog };
+export { ConfirmPublishDialog }

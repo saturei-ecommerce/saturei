@@ -1,9 +1,9 @@
-import { RadioGroup } from "radix-ui";
+import { RadioGroup } from 'radix-ui'
 
 interface RadioItemProps {
-  value: string;
-  id: string;
-  label: string;
+  value: string
+  id: string
+  label: string
 }
 
 function RadioItem({ value, id, label }: RadioItemProps) {
@@ -20,7 +20,7 @@ function RadioItem({ value, id, label }: RadioItemProps) {
         {label}
       </label>
     </div>
-  );
+  )
 }
 
-export { RadioItem };
+export { RadioItem }
