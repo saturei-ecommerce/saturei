@@ -1,7 +1,7 @@
-"use client";
-import * as Popover from "@radix-ui/react-popover";
-import { LogIn, Package, Plus, ShoppingBag, User } from "lucide-react";
-import Link from "next/link";
+'use client'
+import * as Popover from '@radix-ui/react-popover'
+import { LogIn, Package, Plus, ShoppingBag, User } from 'lucide-react'
+import Link from 'next/link'
 
 export function Navbar() {
   return (
@@ -69,7 +69,7 @@ export function Navbar() {
         </nav>
       </div>
     </header>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

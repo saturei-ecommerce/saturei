@@ -1,133 +1,133 @@
-"use client";
+'use client'
 
-import * as RadioGroup from "@radix-ui/react-radio-group";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { z } from "zod";
-import { Input } from "@/components/ui/input";
-import { RadioItem } from "@/components/ui/radio";
-import { SelectField } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
-import { TextAreaField } from "@/components/ui/text-area";
-import { env } from "@/env";
-import { TipsDialog } from "./alert-atractive";
-import { ConfirmPublishDialog } from "./alert-publish";
-import { PhotoSlot } from "./photo-select";
+import * as RadioGroup from '@radix-ui/react-radio-group'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { z } from 'zod'
+import { Input } from '@/components/ui/input'
+import { RadioItem } from '@/components/ui/radio'
+import { SelectField } from '@/components/ui/select'
+import { Separator } from '@/components/ui/separator'
+import { TextAreaField } from '@/components/ui/text-area'
+import { uploadFotosAction } from './actions'
+import { TipsDialog } from './alert-atractive'
+import { ConfirmPublishDialog } from './alert-publish'
+import { PhotoSlot } from './photo-select'
 
 // ─── Schema ───────────────────────────────────────────────────────────────────
 
 const productSchema = z.object({
-  title: z.string().min(1, "título é obrigatório"),
-  description: z.string().min(1, "descrição é obrigatória"),
+  title: z.string().min(1, 'título é obrigatório'),
+  description: z.string().min(1, 'descrição é obrigatória'),
   price: z
     .string()
-    .min(1, "preço é obrigatório")
-    .refine((val) => Number(val) > 0, "preço deve ser maior que zero"),
-  conservationState: z.enum(["USADO", "NOVO"]),
-  category: z.string().min(1, "categoria é obrigatória"),
-  location: z.string().min(1, "localização é obrigatória"),
-  imageUrls: z.array(z.string()).min(1, "adicione pelo menos uma foto"),
-});
+    .min(1, 'preço é obrigatório')
+    .refine((val) => Number(val) > 0, 'preço deve ser maior que zero'),
+  conservationState: z.enum(['USADO', 'NOVO']),
+  category: z.string().min(1, 'categoria é obrigatória'),
+  location: z.string().min(1, 'localização é obrigatória'),
+  imageUrls: z.array(z.string()).min(1, 'adicione pelo menos uma foto'),
+})
 
-export type ProductFormData = z.infer<typeof productSchema>;
+export type ProductFormData = z.infer<typeof productSchema>
+
+interface OnSubmitProps {
+  data: Omit<ProductFormData, 'imageUrls'>
+}
+
+interface OnSubmitResponse {
+  listingId: string
+}
 
 interface ProductFormProps {
-  onSubmit: (
-    data: Omit<ProductFormData, "imageUrls">,
-  ) => Promise<{ id: string }>;
+  onSubmit: ({ data }: OnSubmitProps) => Promise<OnSubmitResponse>
 }
 
 // ─── Upload helpers ───────────────────────────────────────────────────────────
 
 function dataUrlToFile(dataUrl: string, filename: string): File {
-  const [header, base64] = dataUrl.split(",");
-  const mime = header.match(/:(.*?);/)?.[1] ?? "image/jpeg";
-  const binary = atob(base64);
-  const array = new Uint8Array(binary.length);
+  const [header, base64] = dataUrl.split(',')
+  const mime = header.match(/:(.*?);/)?.[1] ?? 'image/jpeg'
+  const binary = atob(base64)
+  const array = new Uint8Array(binary.length)
   for (let i = 0; i < binary.length; i++) {
-    array[i] = binary.charCodeAt(i);
+    array[i] = binary.charCodeAt(i)
   }
-  return new File([array], filename, { type: mime });
+  return new File([array], filename, { type: mime })
 }
 
 async function uploadFotos(
   listingId: string,
   fotos: (string | null)[],
 ): Promise<string[]> {
-  const formData = new FormData();
+  const formData = new FormData()
 
   for (const foto of fotos) {
-    if (!foto) continue;
-    const file = dataUrlToFile(foto, `${crypto.randomUUID()}.jpg`);
-    formData.append("files", file);
+    if (!foto) continue
+    const file = dataUrlToFile(foto, `${crypto.randomUUID()}.jpg`)
+    formData.append('files', file)
   }
 
-  const response = await fetch(
-    `${env.API_BASE_URL}/listings/${listingId}/images`,
-    {
-      method: "POST",
-      body: formData,
-    },
-  );
+  const response = await uploadFotosAction(listingId, formData)
 
   if (!response.ok) {
-    const errorBody = await response.text();
+    const errorBody = await response.text()
     throw new Error(
       `Erro ao fazer upload das imagens: ${response.status} - ${errorBody}`,
-    );
+    )
   }
 
-  return response.json() as Promise<string[]>;
+  return response.json() as Promise<string[]>
 }
 
 // ─── ProductForm ──────────────────────────────────────────────────────────────
 
 export function ProductForm({ onSubmit }: ProductFormProps) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [conservationState, setConservationState] = useState<"USADO" | "NOVO">(
-    "USADO",
-  );
-  const [category, setCategory] = useState("");
-  const [location, setLocation] = useState("");
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [price, setPrice] = useState('')
+  const [conservationState, setConservationState] = useState<'USADO' | 'NOVO'>(
+    'USADO',
+  )
+  const [category, setCategory] = useState('')
+  const [location, setLocation] = useState('')
   const [fotos, setFotos] = useState<(string | null)[]>([
     null,
     null,
     null,
     null,
     null,
-  ]);
-  const [showExtraSlots, setShowExtraSlots] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  ])
+  const [showExtraSlots, setShowExtraSlots] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
-  const fileRefs = useRef<(HTMLInputElement | null)[]>([]);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const fileRefs = useRef<(HTMLInputElement | null)[]>([])
 
   useEffect(() => {
-    setShowExtraSlots(fotos[0] !== null);
-  }, [fotos[0]]);
+    setIsMounted(true)
+  }, [])
+
+  useEffect(() => {
+    setShowExtraSlots(fotos[0] !== null)
+  }, [fotos[0]])
 
   const handleAdd = (index: number, dataUrl: string) => {
     setFotos((prev) => {
-      const u = [...prev];
-      u[index] = dataUrl;
-      return u;
-    });
-  };
+      const u = [...prev]
+      u[index] = dataUrl
+      return u
+    })
+  }
 
   const handleRemove = (index: number) => {
     setFotos((prev) => {
-      const u = [...prev];
-      u[index] = null;
-      return u;
-    });
-    const ref = fileRefs.current[index];
-    if (ref) ref.value = "";
-  };
+      const u = [...prev]
+      u[index] = null
+      return u
+    })
+    const ref = fileRefs.current[index]
+    if (ref) ref.value = ''
+  }
 
   const formValues = useMemo(
     () => ({
@@ -140,37 +140,32 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
       imageUrls: fotos.filter((f): f is string => f !== null),
     }),
     [title, description, price, conservationState, category, location, fotos],
-  );
+  )
 
   const isFormValid = useMemo(() => {
-    return productSchema.safeParse(formValues).success;
-  }, [formValues]);
+    return productSchema.safeParse(formValues).success
+  }, [formValues])
 
   const handleSubmit = async () => {
-    const result = productSchema.safeParse(formValues);
-    if (!result.success) return;
+    const result = productSchema.safeParse(formValues)
+    if (!result.success) return
 
     try {
-      setIsUploading(true);
+      setIsUploading(true)
 
       // 1. Cria o listing sem imagens
-      const { id: listingId } = await onSubmit({
-        title: result.data.title,
-        description: result.data.description,
-        price: result.data.price,
-        conservationState: result.data.conservationState,
-        category: result.data.category,
-        location: result.data.location,
-      });
+      const { listingId } = await onSubmit({
+        data: result.data,
+      })
 
       // 2. Envia as imagens como multipart/form-data para o backend
-      await uploadFotos(listingId, fotos);
+      await uploadFotos(listingId, fotos)
     } catch (err) {
-      console.error("Erro ao publicar anúncio:", err);
+      console.error('Erro ao publicar anúncio:', err)
     } finally {
-      setIsUploading(false);
+      setIsUploading(false)
     }
-  };
+  }
 
   return (
     <div className="flex gap-10">
@@ -188,14 +183,14 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
           onAdd={handleAdd}
           onRemove={handleRemove}
           fileRef={(el) => {
-            fileRefs.current[0] = el;
+            fileRefs.current[0] = el
           }}
         />
 
         {showExtraSlots && (
           <div
             className="space-y-3"
-            style={{ animation: "fadeSlideIn 0.3s ease forwards" }}
+            style={{ animation: 'fadeSlideIn 0.3s ease forwards' }}
           >
             <div className="grid grid-cols-2 gap-2">
               {[1, 2, 3, 4].map((i) => (
@@ -207,7 +202,7 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
                   onAdd={handleAdd}
                   onRemove={handleRemove}
                   fileRef={(el) => {
-                    fileRefs.current[i] = el;
+                    fileRefs.current[i] = el
                   }}
                 />
               ))}
@@ -260,7 +255,7 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
         <RadioGroup.Root
           className="flex items-center gap-8"
           value={conservationState}
-          onValueChange={(val) => setConservationState(val as "USADO" | "NOVO")}
+          onValueChange={(val) => setConservationState(val as 'USADO' | 'NOVO')}
         >
           <RadioItem value="USADO" id="usado" label="produto usado" />
           <RadioItem value="NOVO" id="novo" label="produto novo" />
@@ -274,9 +269,9 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
           value={category}
           onValueChange={setCategory}
           options={[
-            { value: "roupas", label: "roupas" },
-            { value: "calcados", label: "calçados" },
-            { value: "acessorios", label: "acessórios" },
+            { value: 'roupas', label: 'roupas' },
+            { value: 'calcados', label: 'calçados' },
+            { value: 'acessorios', label: 'acessórios' },
           ]}
         />
 
@@ -322,5 +317,5 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
         />
       </div>
     </div>
-  );
+  )
 }

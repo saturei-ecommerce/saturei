@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import * as AlertDialog from '@radix-ui/react-alert-dialog'
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import {
   Edit,
   EllipsisVertical,
@@ -10,42 +10,42 @@ import {
   Play,
   Plus,
   Trash2,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+} from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type ListingStatus = "ACTIVE" | "PAUSED" | "SOLD";
+type ListingStatus = 'ACTIVE' | 'PAUSED' | 'SOLD'
 
 interface Listing {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  conservationState: "USADO" | "NOVO";
-  category: string;
-  location: string;
-  status: ListingStatus;
-  imageUrls: string[];
-  createdAt: string;
+  id: string
+  title: string
+  description: string
+  price: number
+  conservationState: 'USADO' | 'NOVO'
+  category: string
+  location: string
+  status: ListingStatus
+  imageUrls: string[]
+  createdAt: string
 }
 
 // ─── Status badge ─────────────────────────────────────────────────────────────
 
 function StatusBadge({ status }: { status: ListingStatus }) {
   const styles: Record<ListingStatus, string> = {
-    ACTIVE: "bg-green-50 text-green-600 border-green-100",
-    PAUSED: "bg-yellow-50 text-yellow-600 border-yellow-100",
-    SOLD: "bg-gray-50 text-gray-500 border-gray-100",
-  };
+    ACTIVE: 'bg-green-50 text-green-600 border-green-100',
+    PAUSED: 'bg-yellow-50 text-yellow-600 border-yellow-100',
+    SOLD: 'bg-gray-50 text-gray-500 border-gray-100',
+  }
 
   const labels: Record<ListingStatus, string> = {
-    ACTIVE: "ativo",
-    PAUSED: "pausado",
-    SOLD: "vendido",
-  };
+    ACTIVE: 'ativo',
+    PAUSED: 'pausado',
+    SOLD: 'vendido',
+  }
 
   return (
     <span
@@ -53,7 +53,7 @@ function StatusBadge({ status }: { status: ListingStatus }) {
     >
       {labels[status]}
     </span>
-  );
+  )
 }
 
 // ─── Delete Dialog ────────────────────────────────────────────────────────────
@@ -62,16 +62,16 @@ function DeleteDialog({
   listing,
   onConfirm,
 }: {
-  listing: Listing;
-  onConfirm: () => Promise<void>;
+  listing: Listing
+  onConfirm: () => Promise<void>
 }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const handleConfirm = async () => {
-    setLoading(true);
-    await onConfirm();
-    setLoading(false);
-  };
+    setLoading(true)
+    await onConfirm()
+    setLoading(false)
+  }
 
   return (
     <AlertDialog.Root>
@@ -93,10 +93,10 @@ function DeleteDialog({
               excluir anúncio?
             </AlertDialog.Title>
             <AlertDialog.Description className="text-sm text-gray-500 leading-relaxed">
-              o anúncio{" "}
+              o anúncio{' '}
               <span className="font-medium text-gray-700">
                 "{listing.title}"
-              </span>{" "}
+              </span>{' '}
               será removido permanentemente e não poderá ser recuperado.
             </AlertDialog.Description>
           </div>
@@ -129,7 +129,7 @@ function DeleteDialog({
         </AlertDialog.Content>
       </AlertDialog.Portal>
     </AlertDialog.Root>
-  );
+  )
 }
 
 // ─── Listing Card ─────────────────────────────────────────────────────────────
@@ -139,13 +139,13 @@ function ListingCard({
   onDelete,
   onToggleStatus,
 }: {
-  listing: Listing;
-  onDelete: (id: string) => Promise<void>;
-  onToggleStatus: (id: string, status: ListingStatus) => Promise<void>;
+  listing: Listing
+  onDelete: (id: string) => Promise<void>
+  onToggleStatus: (id: string, status: ListingStatus) => Promise<void>
 }) {
-  const isPaused = listing.status === "PAUSED";
-  const isSold = listing.status === "SOLD";
-  const coverImage = listing.imageUrls[0];
+  const isPaused = listing.status === 'PAUSED'
+  const isSold = listing.status === 'SOLD'
+  const coverImage = listing.imageUrls[0]
 
   return (
     <div className="flex gap-4 p-4 bg-white rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all">
@@ -180,7 +180,7 @@ function ListingCard({
         </p>
 
         <p className="text-sm font-semibold text-primary">
-          R$ {Number(listing.price).toFixed(2).replace(".", ",")}
+          R$ {Number(listing.price).toFixed(2).replace('.', ',')}
         </p>
       </div>
 
@@ -243,73 +243,73 @@ function ListingCard({
         </DropdownMenu.Root>
       )}
     </div>
-  );
+  )
 }
 
 // ─── MyListingsPage ───────────────────────────────────────────────────────────
 
 export default function MyListingsPage() {
-  const [listings, setListings] = useState<Listing[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [listings, setListings] = useState<Listing[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchListings() {
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/listings/me`,
-        );
-        if (!response.ok) throw new Error("Erro ao buscar anúncios");
-        const data = await response.json();
-        setListings(data.content ?? data);
+        )
+        if (!response.ok) throw new Error('Erro ao buscar anúncios')
+        const data = await response.json()
+        setListings(data.content ?? data)
       } catch (err) {
-        console.error(err);
+        console.error(err)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     }
 
-    fetchListings();
-  }, []);
+    fetchListings()
+  }, [])
 
   const handleDelete = async (id: string) => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/listings/${id}`,
-        { method: "DELETE" },
-      );
-      if (!response.ok) throw new Error("Erro ao excluir");
-      setListings((prev) => prev.filter((l) => l.id !== id));
+        { method: 'DELETE' },
+      )
+      if (!response.ok) throw new Error('Erro ao excluir')
+      setListings((prev) => prev.filter((l) => l.id !== id))
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
-  };
+  }
 
   const handleToggleStatus = async (
     id: string,
     currentStatus: ListingStatus,
   ) => {
-    const newStatus = currentStatus === "PAUSED" ? "ACTIVE" : "PAUSED";
+    const newStatus = currentStatus === 'PAUSED' ? 'ACTIVE' : 'PAUSED'
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/listings/${id}/status`,
         {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ status: newStatus }),
         },
-      );
-      if (!response.ok) throw new Error("Erro ao atualizar status");
+      )
+      if (!response.ok) throw new Error('Erro ao atualizar status')
       setListings((prev) =>
         prev.map((l) => (l.id === id ? { ...l, status: newStatus } : l)),
-      );
+      )
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
-  };
+  }
 
-  const active = listings.filter((l) => l.status === "ACTIVE");
-  const paused = listings.filter((l) => l.status === "PAUSED");
-  const sold = listings.filter((l) => l.status === "SOLD");
+  const active = listings.filter((l) => l.status === 'ACTIVE')
+  const paused = listings.filter((l) => l.status === 'PAUSED')
+  const sold = listings.filter((l) => l.status === 'SOLD')
 
   return (
     <div className="flex items-start justify-center p-5">
@@ -321,7 +321,7 @@ export default function MyListingsPage() {
               meus anúncios
             </h1>
             <p className="text-sm text-muted-foreground mt-0.5">
-              {listings.length} anúncio{listings.length !== 1 ? "s" : ""} no
+              {listings.length} anúncio{listings.length !== 1 ? 's' : ''} no
               total
             </p>
           </div>
@@ -415,5 +415,5 @@ export default function MyListingsPage() {
         )}
       </div>
     </div>
-  );
+  )
 }

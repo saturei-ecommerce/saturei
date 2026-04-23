@@ -12,7 +12,8 @@ const MOCK_LISTINGS: ListingResponse[] = [
     sellerId: 'seller-mock-1',
     sellerName: 'Carlos Mendes',
     title: 'MacBook Pro M3 14" — Como novo',
-    description: 'Comprado há 6 meses, pouco uso. Acompanha carregador original e caixa.',
+    description:
+      'Comprado há 6 meses, pouco uso. Acompanha carregador original e caixa.',
     price: 12500,
     conservationState: 'USED',
     status: 'ACTIVE',
@@ -65,13 +66,22 @@ function filterMocks(filters: MockFilters): ListingResponse[] {
   const kw = filters.keyword?.toLowerCase().trim()
   return MOCK_LISTINGS.filter((l) => {
     if (kw) {
-      const haystack = [l.title, l.description, l.category, l.location, l.sellerName]
+      const haystack = [
+        l.title,
+        l.description,
+        l.category,
+        l.location,
+        l.sellerName,
+      ]
         .filter(Boolean)
         .join(' ')
         .toLowerCase()
       if (!haystack.includes(kw)) return false
     }
-    if (filters.category && l.category?.toLowerCase() !== filters.category.toLowerCase())
+    if (
+      filters.category &&
+      l.category?.toLowerCase() !== filters.category.toLowerCase()
+    )
       return false
     if (
       filters.location &&
@@ -138,8 +148,12 @@ export function ListingGrid({
       <div className="flex flex-col gap-4 animate-fade-in">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <p className="text-sm text-muted-foreground">
-            <span className="font-semibold text-foreground">{filtered.length}</span>{' '}
-            {filtered.length === 1 ? 'anúncio encontrado' : 'anúncios encontrados'}
+            <span className="font-semibold text-foreground">
+              {filtered.length}
+            </span>{' '}
+            {filtered.length === 1
+              ? 'anúncio encontrado'
+              : 'anúncios encontrados'}
           </p>
         </div>
         <Grid>

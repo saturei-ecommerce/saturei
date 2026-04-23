@@ -1,18 +1,18 @@
-import * as Select from "@radix-ui/react-select";
-import { ChevronDown } from "lucide-react";
+import * as Select from '@radix-ui/react-select'
+import { ChevronDown } from 'lucide-react'
 
 function SelectField({
   label,
   options,
-  placeholder = "selecione",
+  placeholder = 'selecione',
   value,
   onValueChange,
 }: {
-  label: string;
-  options: { value: string; label: string }[];
-  placeholder?: string;
-  value?: string;
-  onValueChange?: (val: string) => void;
+  label: string
+  options: { value: string; label: string }[]
+  placeholder?: string
+  value?: string
+  onValueChange?: (val: string) => void
 }) {
   return (
     <div className="space-y-1">
@@ -29,7 +29,7 @@ function SelectField({
           <Select.Content
             position="popper"
             sideOffset={4}
-            style={{ width: "var(--radix-select-trigger-width)" }}
+            style={{ width: 'var(--radix-select-trigger-width)' }}
             className="z-50 bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden"
           >
             <Select.Viewport className="max-h-55">
@@ -47,7 +47,7 @@ function SelectField({
         </Select.Portal>
       </Select.Root>
     </div>
-  );
+  )
 }
 
-export { SelectField };
+export { SelectField }

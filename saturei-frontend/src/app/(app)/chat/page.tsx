@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { ChatPageClientWrapper } from '@/app/chat/ChatPageClient'
+import { ChatPageClientWrapper } from '@/app/(app)/chat/ChatPageClient'
 
 export const metadata: Metadata = {
   title: 'Mensagens',
@@ -22,6 +22,7 @@ function ChatPageSkeleton() {
         <div className="h-16 skeleton" />
         <div className="flex-1 p-3 flex flex-col gap-2">
           {Array.from({ length: 5 }).map((_, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: no problem
             <div key={i} className="h-20 skeleton rounded-xl" />
           ))}
         </div>

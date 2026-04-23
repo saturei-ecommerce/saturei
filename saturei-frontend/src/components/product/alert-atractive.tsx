@@ -6,65 +6,65 @@ import {
   Sparkles,
   Tag,
   Truck,
-} from "lucide-react";
-import { AlertDialog } from "radix-ui";
+} from 'lucide-react'
+import { AlertDialog } from 'radix-ui'
 
 const tips = [
   {
-    id: "fotos",
+    id: 'fotos',
     icon: ImageIcon,
-    color: "text-orange-500",
-    bg: "bg-orange-50",
-    title: "4 fotos ou mais",
+    color: 'text-orange-500',
+    bg: 'bg-orange-50',
+    title: '4 fotos ou mais',
     description:
-      "Use boa iluminação natural e fundo neutro. Fotografe frente, costas, etiqueta e detalhes. Anúncios com 4+ fotos vendem o dobro.",
+      'Use boa iluminação natural e fundo neutro. Fotografe frente, costas, etiqueta e detalhes. Anúncios com 4+ fotos vendem o dobro.',
   },
   {
-    id: "titulo",
+    id: 'titulo',
     icon: Tag,
-    color: "text-purple-500",
-    bg: "bg-purple-50",
-    title: "título objetivo e completo",
+    color: 'text-purple-500',
+    bg: 'bg-purple-50',
+    title: 'título objetivo e completo',
     description:
       '"Vestido Farm Floral Midi Azul Tam M" converte muito mais que "vestido bonito". Inclua marca, modelo e característica principal.',
   },
   {
-    id: "descricao",
+    id: 'descricao',
     icon: AlignLeft,
-    color: "text-blue-500",
-    bg: "bg-blue-50",
-    title: "descrição honesta",
+    color: 'text-blue-500',
+    bg: 'bg-blue-50',
+    title: 'descrição honesta',
     description:
-      "Mencione o estado real, medidas exatas e eventuais defeitos. Transparência evita devoluções e gera avaliações positivas.",
+      'Mencione o estado real, medidas exatas e eventuais defeitos. Transparência evita devoluções e gera avaliações positivas.',
   },
   {
-    id: "preco",
+    id: 'preco',
     icon: DollarSign,
-    color: "text-green-500",
-    bg: "bg-green-50",
-    title: "preço competitivo",
+    color: 'text-green-500',
+    bg: 'bg-green-50',
+    title: 'preço competitivo',
     description:
-      "Pesquise produtos similares antes de definir o valor. Um preço levemente abaixo da concorrência acelera muito a venda.",
+      'Pesquise produtos similares antes de definir o valor. Um preço levemente abaixo da concorrência acelera muito a venda.',
   },
   {
-    id: "frete",
+    id: 'frete',
     icon: Truck,
-    color: "text-pink-500",
-    bg: "bg-pink-50",
-    title: "ofereça frete acessível",
+    color: 'text-pink-500',
+    bg: 'bg-pink-50',
+    title: 'ofereça frete acessível',
     description:
-      "Calcule o peso corretamente e considere absorver parte do frete. Vendedores com frete grátis têm 40% mais cliques.",
+      'Calcule o peso corretamente e considere absorver parte do frete. Vendedores com frete grátis têm 40% mais cliques.',
   },
   {
-    id: "resposta",
+    id: 'resposta',
     icon: Clock,
-    color: "text-yellow-500",
-    bg: "bg-yellow-50",
-    title: "responda rápido",
+    color: 'text-yellow-500',
+    bg: 'bg-yellow-50',
+    title: 'responda rápido',
     description:
-      "Vendedores que respondem em menos de 1 hora têm taxa de conversão 3x maior. Ative as notificações do aplicativo.",
+      'Vendedores que respondem em menos de 1 hora têm taxa de conversão 3x maior. Ative as notificações do aplicativo.',
   },
-];
+]
 function TipsDialog() {
   return (
     <AlertDialog.Root>
@@ -101,7 +101,7 @@ function TipsDialog() {
           {/* Tips */}
           <div className="overflow-y-auto px-6 py-5 space-y-4 flex-1">
             {tips.map((tip, i) => {
-              const Icon = tip.icon;
+              const Icon = tip.icon
               return (
                 <div key={tip.id} className="flex gap-3 items-start">
                   <div
@@ -118,7 +118,7 @@ function TipsDialog() {
                     </p>
                   </div>
                 </div>
-              );
+              )
             })}
           </div>
 
@@ -136,7 +136,7 @@ function TipsDialog() {
         </AlertDialog.Content>
       </AlertDialog.Portal>
     </AlertDialog.Root>
-  );
+  )
 }
 
-export { TipsDialog };
+export { TipsDialog }

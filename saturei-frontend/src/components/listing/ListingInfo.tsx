@@ -9,8 +9,7 @@ export function ListingInfo({ listing }: { listing: ListingResponse }) {
     currency: 'BRL',
   }).format(listing.price)
 
-  const conditionLabel =
-    listing.conservationState === 'NEW' ? 'Novo' : 'Usado'
+  const conditionLabel = listing.conservationState === 'NEW' ? 'Novo' : 'Usado'
 
   return (
     <div className="bg-white rounded-2xl border border-[var(--border)] shadow-sm p-6 flex flex-col gap-4">

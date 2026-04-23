@@ -26,7 +26,9 @@ export const useCartStore = create<CartState>()(
       items: [],
 
       addItem: (item, quantity = 1) => {
-        const q = Number.isFinite(quantity) ? Math.max(1, Math.floor(quantity)) : 1
+        const q = Number.isFinite(quantity)
+          ? Math.max(1, Math.floor(quantity))
+          : 1
         set((state) => {
           const existing = state.items.find((it) => it.id === item.id)
           if (!existing) {
@@ -45,7 +47,9 @@ export const useCartStore = create<CartState>()(
       },
 
       setQuantity: (id, quantity) => {
-        const q = Number.isFinite(quantity) ? Math.max(1, Math.floor(quantity)) : 1
+        const q = Number.isFinite(quantity)
+          ? Math.max(1, Math.floor(quantity))
+          : 1
         set((state) => ({
           items: state.items.map((it) =>
             it.id === id ? { ...it, quantity: q } : it,

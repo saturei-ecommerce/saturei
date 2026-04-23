@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SearchPageClientWrapper } from './SearchPageClient'
+import { SearchPageClientWrapper } from './search/SearchPageClient'
 
 export const metadata: Metadata = {
   title: 'Saturei - Marketplace',
@@ -7,8 +7,7 @@ export const metadata: Metadata = {
     'Pesquise anúncios no Saturei com filtros por palavra-chave, categoria, localização e faixa de preço. Encontre o melhor negócio.',
   openGraph: {
     title: 'Saturei - Marketplace',
-    description:
-      'Encontre produtos novos e usados no Saturei.',
+    description: 'Encontre produtos novos e usados no Saturei.',
     type: 'website',
   },
 }

@@ -12,11 +12,11 @@ export async function loginAction({
   password,
 }: LoginRequest): Promise<ActionResponse> {
   try {
-    const { token } = await login({ email, password })
+    const { accessToken } = await login({ email, password })
 
     const cookieStore = await cookies()
 
-    cookieStore.set('token', token, {
+    cookieStore.set('token', accessToken, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7, // 7 days
     })

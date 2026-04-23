@@ -1,9 +1,9 @@
-import z from "zod";
+import z from 'zod'
 
 const envSchema = z.object({
   NODE_ENV: z
-    .enum(["development", "production", "test"])
-    .default("development"),
+    .enum(['development', 'production', 'test'])
+    .default('development'),
 
   NEXT_PUBLIC_WEB_BASE_URL: z.url(),
   API_BASE_URL: z.url(),
@@ -13,6 +13,6 @@ const envSchema = z.object({
 
   GOOGLE_CLIENT_ID: z.string().optional(),
   GOOGLE_CLIENT_SECRET: z.string().optional(),
-});
+})
 
-export const env = envSchema.parse(process.env);
+export const env = envSchema.parse(process.env)

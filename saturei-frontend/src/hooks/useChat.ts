@@ -82,7 +82,8 @@ const DEMO_MESSAGES: Record<string, ChatMessage[]> = {
       conversationId: 'conv-1',
       senderId: 'seller-1',
       senderName: 'Carlos Mendes',
-      content: 'Olá! Vi que você se interessou pelo meu MacBook Pro. Posso ajudar?',
+      content:
+        'Olá! Vi que você se interessou pelo meu MacBook Pro. Posso ajudar?',
       sentAt: new Date(Date.now() - 10 * 60_000).toISOString(),
       isOwn: false,
     },
@@ -156,7 +157,8 @@ interface UseChatOptions {
 }
 
 export function useChat({ conversationId, token }: UseChatOptions) {
-  const [conversations, setConversations] = useState<Conversation[]>(DEMO_CONVERSATIONS)
+  const [conversations, setConversations] =
+    useState<Conversation[]>(DEMO_CONVERSATIONS)
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [connected, setConnected] = useState(false)
   const [demoMode, setDemoMode] = useState(true)
@@ -174,9 +176,7 @@ export function useChat({ conversationId, token }: UseChatOptions) {
     setMessages(DEMO_MESSAGES[conversationId] ?? [])
     // Mark as read
     setConversations((prev) =>
-      prev.map((c) =>
-        c.id === conversationId ? { ...c, unreadCount: 0 } : c,
-      ),
+      prev.map((c) => (c.id === conversationId ? { ...c, unreadCount: 0 } : c)),
     )
   }, [conversationId])
 
@@ -312,7 +312,12 @@ export function useChat({ conversationId, token }: UseChatOptions) {
   )
 
   const startConversation = useCallback(
-    (listingId: string, listingTitle: string, sellerId: string, sellerName: string) => {
+    (
+      listingId: string,
+      listingTitle: string,
+      sellerId: string,
+      sellerName: string,
+    ) => {
       // Check if conversation already exists
       const existing = conversations.find(
         (c) => c.listingId === listingId && c.sellerId === sellerId,
@@ -334,10 +339,12 @@ export function useChat({ conversationId, token }: UseChatOptions) {
         sellerName,
         unreadCount: 0,
       }
-      
+
       setConversations((prev) => {
         // Double check in functional updater for React Strict Mode safety
-        if (prev.some(c => c.listingId === listingId && c.sellerId === sellerId)) {
+        if (
+          prev.some((c) => c.listingId === listingId && c.sellerId === sellerId)
+        ) {
           return prev
         }
         return [newConv, ...prev]
