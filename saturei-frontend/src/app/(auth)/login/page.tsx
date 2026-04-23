@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Suspense } from 'react'
 import { LoginForm } from '@/components/auth/login-form'
 import { SocialLogin } from '@/components/auth/social-login'
 import { Separator } from '@/components/ui/separator'
@@ -15,7 +16,9 @@ export default function LoginPage() {
         </div>
         <SocialLogin />
         <Separator />
-        <LoginForm />
+        <Suspense>
+          <LoginForm />
+        </Suspense>
         <p className="text-sm text-muted-foreground text-center">
           Ainda não tem uma conta?{' '}
           <Link
