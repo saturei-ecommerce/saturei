@@ -1,3 +1,5 @@
+import { api } from '../api-client'
+
 export interface LoginRequest {
   email: string
   password: string
@@ -11,11 +13,14 @@ export async function login({
   email,
   password,
 }: LoginRequest): Promise<LoginResponse> {
-  await new Promise((resolve) => setTimeout(resolve, 2000))
-
-  const response = {
-    token: 'fake-token',
-  }
+  const response = await api
+    .post('/auth/login', {
+      json: {
+        email,
+        password,
+      },
+    })
+    .json<LoginResponse>()
 
   return response
 }

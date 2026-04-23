@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff, Loader2, Lock, Mail } from 'lucide-react'
+import { redirect } from 'next/navigation'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -45,9 +46,15 @@ export function RegisterForm() {
       return
     }
 
+    registerForm.reset()
+
     toast.success(message)
 
-    registerForm.reset()
+    const params = new URLSearchParams({
+      email,
+    })
+
+    redirect(`/login?${params.toString()}`)
   }
 
   const isSubmitting = registerForm.formState.isSubmitting

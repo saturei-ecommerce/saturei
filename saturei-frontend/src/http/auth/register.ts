@@ -1,3 +1,5 @@
+import { api } from '../api-client'
+
 export interface RegisterRequest {
   name: string
   email: string
@@ -12,5 +14,13 @@ export async function register({
   email,
   password,
 }: RegisterRequest): Promise<RegisterResponse> {
-  await new Promise((resolve) => setTimeout(resolve, 2000))
+  await api
+    .post('/auth/register', {
+      json: {
+        name,
+        email,
+        password,
+      },
+    })
+    .json()
 }

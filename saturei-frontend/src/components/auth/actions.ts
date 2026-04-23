@@ -1,5 +1,6 @@
 'use server'
 
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { env } from '@/env'
 import { type LoginRequest, login } from '@/http/auth/login'
@@ -11,9 +12,14 @@ export async function loginAction({
   password,
 }: LoginRequest): Promise<ActionResponse> {
   try {
-    const response = await login({ email, password })
+    const { token } = await login({ email, password })
 
-    console.log('Login response:', response)
+    const cookieStore = await cookies()
+
+    cookieStore.set('token', token, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    })
   } catch (error) {
     return {
       success: false,
