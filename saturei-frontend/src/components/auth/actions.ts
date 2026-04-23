@@ -54,6 +54,8 @@ export async function registerAction({
 }
 
 export async function loginWithGoogleAction() {
+  if (!env.GOOGLE_CLIENT_ID) throw new Error('Google OAuth is not configured')
+
   const googleLoginUrl = new URL(
     'o/oauth2/v2/auth',
     'https://accounts.google.com',
@@ -66,12 +68,14 @@ export async function loginWithGoogleAction() {
   )
   googleLoginUrl.searchParams.set('scope', 'openid email profile')
   googleLoginUrl.searchParams.set('response_type', 'code')
-  googleLoginUrl.searchParams.set('access_type', 'offline') // optional, for refresh token
+  googleLoginUrl.searchParams.set('access_type', 'offline')
 
   redirect(googleLoginUrl.toString())
 }
 
 export async function loginWithGithubAction() {
+  if (!env.GITHUB_CLIENT_ID) throw new Error('GitHub OAuth is not configured')
+
   const githubLoginUrl = new URL('login/oauth/authorize', 'https://github.com')
 
   githubLoginUrl.searchParams.set('client_id', env.GITHUB_CLIENT_ID)
