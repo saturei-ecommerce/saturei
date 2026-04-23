@@ -1,7 +1,6 @@
 package com.saturei.backend.shared.security;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.saturei.backend.user.domain.User;
 import com.saturei.backend.user.infrastructure.persistence.JpaUserRepository;
 import org.junit.jupiter.api.BeforeEach;

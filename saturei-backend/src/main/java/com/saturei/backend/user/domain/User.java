@@ -39,15 +39,18 @@ public class User implements UserDetails {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Builder.Default
     @ElementCollection(targetClass = UserPermissions.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_permissions", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    @Column(name = "permissions")
+    @Column(name = "permissions", nullable = false)
     private List<UserPermissions> permissions = new ArrayList<>();
 
     @PrePersist
     void prePersist() {
-        this.createdAt = LocalDateTime.now();
+        if(createdAt == null){
+            createdAt = LocalDateTime.now();
+        }
     }
 
     @Override
