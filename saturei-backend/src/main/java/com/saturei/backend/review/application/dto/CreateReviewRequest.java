@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public record CreateReviewRequest(
         @NotNull UUID orderId,
-        @NotNull @Min(1) @Max(5) int rating,
+        @Min(1) @Max(5) int rating,
         String comment
 ) {}
