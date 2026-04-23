@@ -16,7 +16,7 @@ spring boot rest api for the saturei marketplace (java 17, postgresql)
 
 ### security
 * [x] jwt authentication (filter, provider, token generation) — joao
-* [ ] spring security configuration (cors, csrf, protected routes) — joao
+* [x] spring security configuration (cors, csrf, protected routes) — joao
 * [x] password encryption (bcrypt) — arthur
 * [x] refresh token support — joao
 
@@ -44,5 +44,4 @@ spring boot rest api for the saturei marketplace (java 17, postgresql)
 * [x] docker-compose (app + postgres) — santana
 * [x] .env.example with required environment variables — santana
 * [x] github actions — ci (build + test on pull request) — lucas
-* [ ] github actions — cd (deploy on push to main) — joao
 * [x] health check endpoint via actuator — arthur
