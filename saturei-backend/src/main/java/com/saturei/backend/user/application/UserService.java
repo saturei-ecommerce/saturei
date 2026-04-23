@@ -19,8 +19,6 @@ import java.util.UUID;
 @Transactional
 public class UserService {
 
-    // TODO: implement register, login, getProfile - Arthur
-
     private final JpaUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 

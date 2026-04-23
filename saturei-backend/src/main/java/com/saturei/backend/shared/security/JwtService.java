@@ -20,8 +20,6 @@ import java.time.ZoneOffset;
 @AllArgsConstructor
 public class JwtService {
 
-    // TODO: implement generateToken, validateToken, extractEmail
-
     private final static String TOKEN_PREFIX = "Bearer ";
     private final static String AMERICA_SAO_PAULO_OFFSET = "-03:00";
     private final static String REFRESH_TOKEN_TYPE = "refresh";

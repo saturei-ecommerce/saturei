@@ -6,6 +6,7 @@ import com.saturei.backend.listing.application.dto.ListingResponse;
 import com.saturei.backend.listing.application.dto.SearchListingRequest;
 import com.saturei.backend.listing.application.dto.UpdateListingRequest;
 import com.saturei.backend.listing.application.dto.UpdateStatusRequest;
+import com.saturei.backend.user.domain.User;
 import jakarta.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -71,37 +73,33 @@ public class ListingController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<Page<ListingResponse>> listMine(Pageable pageable) {
-        // TODO: replace hardcoded UUID with authenticated user from SecurityContext
-        UUID sellerId = UUID.randomUUID();
-        return ResponseEntity.ok(listingService.listBySeller(sellerId, pageable));
+    public ResponseEntity<Page<ListingResponse>> listMine(@AuthenticationPrincipal User user, Pageable pageable) {
+        return ResponseEntity.ok(listingService.listBySeller(user.getId(), pageable));
     }
 
     @PostMapping
-    public ResponseEntity<ListingResponse> create(@Valid @RequestBody CreateListingRequest request) {
-        // TODO: replace hardcoded UUID with authenticated user from SecurityContext
-        UUID sellerId = UUID.randomUUID();
-        return ResponseEntity.status(HttpStatus.CREATED).body(listingService.create(request, sellerId));
+    public ResponseEntity<ListingResponse> create(@AuthenticationPrincipal User user,
+                                                  @Valid @RequestBody CreateListingRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(listingService.create(request, user.getId()));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ListingResponse> update(@PathVariable UUID id,
+    public ResponseEntity<ListingResponse> update(@AuthenticationPrincipal User user,
+                                                  @PathVariable UUID id,
                                                   @Valid @RequestBody UpdateListingRequest request) {
-        UUID sellerId = UUID.randomUUID();
-        return ResponseEntity.ok(listingService.update(id, request, sellerId));
+        return ResponseEntity.ok(listingService.update(id, request, user.getId()));
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<ListingResponse> updateStatus(@PathVariable UUID id,
+    public ResponseEntity<ListingResponse> updateStatus(@AuthenticationPrincipal User user,
+                                                        @PathVariable UUID id,
                                                         @Valid @RequestBody UpdateStatusRequest request) {
-        UUID sellerId = UUID.randomUUID();
-        return ResponseEntity.ok(listingService.updateStatus(id, request.status(), sellerId));
+        return ResponseEntity.ok(listingService.updateStatus(id, request.status(), user.getId()));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        UUID sellerId = UUID.randomUUID();
-        listingService.delete(id, sellerId);
+    public ResponseEntity<Void> delete(@AuthenticationPrincipal User user, @PathVariable UUID id) {
+        listingService.delete(id, user.getId());
         return ResponseEntity.noContent().build();
     }
 
