@@ -45,4 +45,4 @@ spring boot rest api for the saturei marketplace (java 17, postgresql)
 * [x] .env.example with required environment variables — santana
 * [x] github actions — ci (build + test on pull request) — lucas
 * [ ] github actions — cd (deploy on push to main) — joao
-* [ ] health check endpoint via actuator — arthur
+* [x] health check endpoint via actuator — arthur
