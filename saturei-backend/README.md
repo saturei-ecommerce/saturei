@@ -6,7 +6,7 @@ spring boot rest api for the saturei marketplace (java 17, postgresql)
 ### architecture
 * [x] ddd package structure scaffold (user, listing, order, chat, review, shared) — lucas
 * [x] global exception handler — arthur
-* [ ] request/response logging filter — joao
+* [x] request/response logging filter — joao
 
 ### database
 * [x] postgresql datasource and jpa configuration — santana
