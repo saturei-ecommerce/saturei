@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { getUrl } from '@/utils/get-url'
 
-const publicRoutes = ['/login', '/register']
+const publicRoutes = ['/', '/login', '/register', '/listing']
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')
