@@ -5,7 +5,7 @@ spring boot rest api for the saturei marketplace (java 17, postgresql)
 
 ### architecture
 * [x] ddd package structure scaffold (user, listing, order, chat, review, shared) — lucas
-* [ ] global exception handler — arthur
+* [x] global exception handler — arthur
 * [ ] request/response logging filter — joao
 
 ### database
@@ -17,11 +17,11 @@ spring boot rest api for the saturei marketplace (java 17, postgresql)
 ### security
 * [x] jwt authentication (filter, provider, token generation) — joao
 * [ ] spring security configuration (cors, csrf, protected routes) — joao
-* [ ] password encryption (bcrypt) — arthur
+* [x] password encryption (bcrypt) — arthur
 * [x] refresh token support — joao
 
 ### bounded contexts
-* [ ] user bounded context (entity, repository, service) — arthur
+* [x] user bounded context (entity, repository, service) — arthur
 * [x] listing bounded context (crud, status management) — lucas
 * [x] image upload handling (storage + size optimization) — lucas
 * [x] search endpoint (keyword + filters: price, location, category) — lucas
@@ -34,7 +34,7 @@ spring boot rest api for the saturei marketplace (java 17, postgresql)
 * [x] imageservice unit tests (resize, validation, upload) — lucas
 * [x] orderservice unit tests (checkout, cancellation, price locking) — lucas
 * [x] listingrepository integration tests (search query filters) — santana
-* [ ] userservice unit tests (register, login) — arthur
+* [x] userservice unit tests (register, login) — arthur
 * [ ] reviewservice unit tests (create, duplicate prevention) — arthur
 * [x] jwtservice unit tests (generate, validate, extract) — joao
 * [x] chatservice unit tests (conversation flow, messaging) — joao

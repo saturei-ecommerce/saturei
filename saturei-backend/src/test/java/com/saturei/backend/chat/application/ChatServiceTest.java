@@ -5,7 +5,6 @@ import com.saturei.backend.chat.application.dto.MessageResponse;
 import com.saturei.backend.chat.application.dto.SendMessageRequest;
 import com.saturei.backend.chat.application.dto.StartConversationRequest;
 import com.saturei.backend.chat.domain.Conversation;
-import com.saturei.backend.chat.domain.Message;
 import com.saturei.backend.chat.infrastructure.persistence.JpaConversationRepository;
 import com.saturei.backend.listing.domain.Listing;
 import com.saturei.backend.listing.infrastructure.persistence.JpaListingRepository;
@@ -20,7 +19,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
