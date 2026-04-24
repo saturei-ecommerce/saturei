@@ -3,7 +3,7 @@
 import { Loader2, Plus } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ListingCard } from "@/components/search/ListingCard";
+import { MyListingCard } from "@/components/mylistings/MyListingCard";
 import {
   deleteListing,
   getMyListings,
@@ -122,7 +122,7 @@ export default function MyListingsPage() {
               ativos · {active.length}
             </p>
             {active.map((listing) => (
-              <ListingCard
+              <MyListingCard
                 key={listing.id}
                 listing={listing}
                 onDelete={handleDelete}
@@ -139,7 +139,7 @@ export default function MyListingsPage() {
               pausados · {paused.length}
             </p>
             {paused.map((listing) => (
-              <ListingCard
+              <MyListingCard
                 key={listing.id}
                 listing={listing}
                 onDelete={handleDelete}
@@ -156,7 +156,7 @@ export default function MyListingsPage() {
               vendidos · {sold.length}
             </p>
             {sold.map((listing) => (
-              <ListingCard
+              <MyListingCard
                 key={listing.id}
                 listing={listing}
                 onDelete={handleDelete}
