@@ -34,7 +34,9 @@ public class SecurityConfig {
                         .requestMatchers("/actuator/health").permitAll()
                         .requestMatchers("/ws/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
-                        // Public search: GET /listings, GET /listings/{id}, GET /listings/meta
+                        // Authenticated-only GET sub-routes (must be declared before the permitAll wildcard)
+                        .requestMatchers(HttpMethod.GET, "/listings/me").authenticated()
+                        // Public search: GET /listings, GET /listings/{id}, GET /listings/categories, etc.
                         .requestMatchers(HttpMethod.GET, "/listings", "/listings/**").permitAll()
                         // Everything else requires authentication
                         .anyRequest().authenticated()
