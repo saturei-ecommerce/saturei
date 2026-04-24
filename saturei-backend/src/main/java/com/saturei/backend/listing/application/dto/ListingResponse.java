@@ -6,6 +6,7 @@ import com.saturei.backend.listing.domain.vo.ConservationState;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,7 +34,7 @@ public record ListingResponse(
                 listing.getPrice(),
                 listing.getConservationState(),
                 listing.getStatus(),
-                listing.getImageUrls(),
+                listing.getImageUrls() == null ? List.of() : new ArrayList<>(listing.getImageUrls()),
                 listing.getCategory(),
                 listing.getLocation(),
                 listing.getCreatedAt()
