@@ -11,6 +11,7 @@ import com.saturei.backend.shared.exception.ApiException;
 import com.saturei.backend.user.infrastructure.persistence.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,13 +91,16 @@ public class ListingService {
         String category = blankToNull(request.category());
         String location = blankToNull(request.location());
 
+        // Strip sort from pageable — the native query has ORDER BY hardcoded
+        Pageable unsorted = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+
         return listingRepository.search(
                 keyword,
                 category,
                 location,
                 request.minPrice(),
                 request.maxPrice(),
-                pageable
+                unsorted
         ).map(ListingResponse::from);
     }
 

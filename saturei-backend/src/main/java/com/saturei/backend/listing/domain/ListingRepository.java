@@ -26,6 +26,7 @@ public interface ListingRepository {
             AND (CAST(:minPrice AS numeric) IS NULL OR l.price >= CAST(:minPrice AS numeric))
             AND (CAST(:maxPrice AS numeric) IS NULL OR l.price <= CAST(:maxPrice AS numeric))
             ORDER BY l.created_at DESC, l.id ASC
+
             """,
             countQuery = """
             SELECT COUNT(*) FROM listings l
