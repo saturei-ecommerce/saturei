@@ -4,7 +4,7 @@ import { Clock, MapPin, MessageCircle, Tag, User } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import type { ListingResponse } from '@/lib/api/listings'
+import type { ListingResponse } from '@/http/search/search-listings'
 import { getImageUrl } from '@/lib/utils'
 
 // Skeleton

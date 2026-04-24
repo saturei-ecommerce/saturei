@@ -8,7 +8,7 @@ import {
   fetchLocations,
   type SearchParams,
   searchListings,
-} from "@/lib/api/listings";
+} from "@/http/search/search-listings";
 
 const DEBOUNCE_MS = 350;
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { AlertCircle, PackageSearch } from 'lucide-react'
-import type { ListingResponse, PageResponse } from '@/lib/api/listings'
+import type { ListingResponse, PageResponse } from '@/http/search/search-listings'
 import { ListingCard, ListingCardSkeleton } from './ListingCard'
 
 // ─── Component ────────────────────────────────────────────────

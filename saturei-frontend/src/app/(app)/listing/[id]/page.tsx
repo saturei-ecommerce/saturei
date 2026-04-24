@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import axios from 'axios'
+import { HTTPError } from 'ky'
 import { notFound } from 'next/navigation'
-import { fetchListingById } from '@/lib/api/listings'
+import { fetchListingById } from '@/http/search/search-listings'
 import { ListingPageClient } from './ListingPageClient'
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ export default async function ListingDetailPage({
     const listing = await fetchListingById(id)
     return <ListingPageClient listing={listing} />
   } catch (err) {
-    if (axios.isAxiosError(err) && err.response?.status === 404) {
+    if (err instanceof HTTPError && err.response.status === 404) {
       notFound()
     }
     throw err

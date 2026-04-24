@@ -1,6 +1,6 @@
 'use client'
 
-import type { ListingResponse } from '@/lib/api/listings'
+import type { ListingResponse } from '@/http/search/search-listings'
 import { MapPin, ShieldCheck, Tag } from 'lucide-react'
 
 export function ListingInfo({ listing }: { listing: ListingResponse }) {
