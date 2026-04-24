@@ -9,7 +9,7 @@ interface CreateListingActionProps {
 }
 
 interface CreateListingActionResponse {
-  id: string;
+  listingId: string;
 }
 
 export async function createListingAction({
@@ -18,7 +18,7 @@ export async function createListingAction({
   try {
     const { id } = await createListing({ data });
 
-    return { id };
+    return { listingId: id };
   } catch (error) {
     console.error("Erro no createListing:", error);
 
