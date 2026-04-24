@@ -14,17 +14,31 @@ public interface ListingRepository {
     @Query("SELECT l FROM Listing l JOIN FETCH l.seller WHERE l.seller.id = :sellerId")
     Page<Listing> findBySellerId(@Param("sellerId") UUID sellerId, Pageable pageable);
 
-    @Query("""
-            SELECT l FROM Listing l JOIN FETCH l.seller
-            WHERE l.status = com.saturei.backend.listing.domain.ListingStatus.ACTIVE
-            AND (:keyword IS NULL OR LOWER(l.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
+    @Query(value = """
+            SELECT l.* FROM listings l
+            JOIN users u ON l.seller_id = u.id
+            WHERE l.status = 'ACTIVE'
+            AND (CAST(:keyword AS text) IS NULL
+                 OR LOWER(l.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
                  OR LOWER(l.description) LIKE LOWER(CONCAT('%', :keyword, '%')))
-            AND (:category IS NULL OR l.category = :category)
-            AND (:location IS NULL OR l.location = :location)
-            AND (:minPrice IS NULL OR l.price >= :minPrice)
-            AND (:maxPrice IS NULL OR l.price <= :maxPrice)
-            ORDER BY l.createdAt DESC, l.id ASC
-            """)
+            AND (CAST(:category AS text) IS NULL OR l.category = :category)
+            AND (CAST(:location AS text) IS NULL OR l.location = :location)
+            AND (CAST(:minPrice AS numeric) IS NULL OR l.price >= CAST(:minPrice AS numeric))
+            AND (CAST(:maxPrice AS numeric) IS NULL OR l.price <= CAST(:maxPrice AS numeric))
+            ORDER BY l.created_at DESC, l.id ASC
+            """,
+            countQuery = """
+            SELECT COUNT(*) FROM listings l
+            WHERE l.status = 'ACTIVE'
+            AND (CAST(:keyword AS text) IS NULL
+                 OR LOWER(l.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
+                 OR LOWER(l.description) LIKE LOWER(CONCAT('%', :keyword, '%')))
+            AND (CAST(:category AS text) IS NULL OR l.category = :category)
+            AND (CAST(:location AS text) IS NULL OR l.location = :location)
+            AND (CAST(:minPrice AS numeric) IS NULL OR l.price >= CAST(:minPrice AS numeric))
+            AND (CAST(:maxPrice AS numeric) IS NULL OR l.price <= CAST(:maxPrice AS numeric))
+            """,
+            nativeQuery = true)
     Page<Listing> search(
             @Param("keyword") String keyword,
             @Param("category") String category,
