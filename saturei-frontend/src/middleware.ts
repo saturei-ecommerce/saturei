@@ -1,19 +1,23 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { getUrl } from '@/utils/get-url'
 
-const publicRoutes = ['/', '/login', '/register', '/listing']
+const publicRoutes = ['/', '/listing']
+const authRoutes = ['/login', '/register']
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')
   const { pathname } = request.nextUrl
 
   const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route))
+  const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route))
 
-  if (isPublicRoute && token) {
+  // Logged-in user trying to access login/register → send to home
+  if (isAuthRoute && token) {
     return NextResponse.redirect(new URL(getUrl('/'), request.url))
   }
 
-  if (!isPublicRoute && !token) {
+  // Unauthenticated user trying to access protected route → send to login
+  if (!isPublicRoute && !isAuthRoute && !token) {
     return NextResponse.redirect(new URL(getUrl('/login'), request.url))
   }
 
