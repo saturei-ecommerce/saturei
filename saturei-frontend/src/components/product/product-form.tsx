@@ -66,28 +66,7 @@ async function uploadFotos(
     formData.append("files", file);
   }
 
-  // uploadFotosAction seems to return a Response. Await it and parse the JSON body.
-  const res = await uploadFotosAction(listingId, formData);
-
-  // If the action returns a Fetch Response, parse and return the JSON payload.
-  // Otherwise, assume it already returned the array of strings.
-  if (typeof (res as any)?.json === "function") {
-    if (!(res as Response).ok) {
-      let bodyText = "";
-      try {
-        bodyText = await (res as Response).text();
-      } catch (e) {
-        /* ignore */
-      }
-      throw new Error(
-        `Erro ao enviar fotos: ${bodyText || (res as Response).status}`,
-      );
-    }
-    const data = await (res as Response).json();
-    return data as string[];
-  }
-
-  return res as unknown as string[];
+  return uploadFotosAction(listingId, formData);
 }
 
 // ─── ProductForm ──────────────────────────────────────────────────────────────
@@ -165,12 +144,12 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
       setIsUploading(true);
 
       // 1. Cria o listing sem imagens
-      const { id } = await onSubmit({
+      const { listingId } = await onSubmit({
         data: result.data,
       });
 
       // 2. Envia as imagens como multipart/form-data para o backend
-      await uploadFotos(id, fotos);
+      await uploadFotos(listingId, fotos);
     } catch (err) {
       console.error("Erro ao publicar anúncio:", err);
     } finally {
