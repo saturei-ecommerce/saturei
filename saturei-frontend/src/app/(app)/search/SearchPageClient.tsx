@@ -32,6 +32,7 @@ function SearchPageClient() {
     listings,
     isLoading,
     isFetching,
+    isError,
     categories,
     locations,
   } = useListingSearch()
@@ -155,8 +156,8 @@ function SearchPageClient() {
               data={listings}
               isLoading={isLoading}
               isFetching={isFetching}
+              isError={isError}
               hasActiveFilters={hasActiveFilters}
-              filters={filters}
             />
 
             {/* Pagination */}
