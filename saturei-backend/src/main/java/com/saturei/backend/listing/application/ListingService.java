@@ -92,7 +92,9 @@ public class ListingService {
         String location = blankToNull(request.location());
 
         // Strip sort from pageable — the native query has ORDER BY hardcoded
-        Pageable unsorted = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+        Pageable unsorted = pageable.isPaged()
+                ? PageRequest.of(pageable.getPageNumber(), pageable.getPageSize())
+                : pageable;
 
         return listingRepository.search(
                 keyword,
