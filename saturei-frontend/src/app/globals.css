@@ -100,6 +100,12 @@
   --sidebar-ring: oklch(65% 0.22 302.321);
 }
 
+@utility auth-background {
+  background-image:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)),
+    url('../assets/auth-bg.jpg');
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

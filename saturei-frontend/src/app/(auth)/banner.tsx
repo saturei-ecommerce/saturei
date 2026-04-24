@@ -2,15 +2,7 @@ import { Sparkles } from 'lucide-react'
 
 export function Banner() {
   return (
-    <div
-      style={{
-        backgroundImage: `
-            linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8)),
-            url('/auth-bg.jpg')
-          `,
-      }}
-      className="p-8 flex flex-col justify-between items-center bg-cover bg-center rounded-lg"
-    >
+    <div className="auth-background min-h-125 p-8 flex flex-col justify-between items-center bg-cover bg-center rounded-lg">
       <div className="w-full flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="size-10 rounded-lg bg-white/20 backdrop-blur-sm flex items-center justify-center">

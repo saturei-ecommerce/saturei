@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { LoginForm } from '@/components/auth/login-form'
-import { SocialLogin } from '@/components/auth/social-login'
-import { Separator } from '@/components/ui/separator'
 
 export default function LoginPage() {
   return (
@@ -14,8 +12,8 @@ export default function LoginPage() {
             Compre, venda e acompanhe tudo em um só lugar
           </p>
         </div>
-        <SocialLogin />
-        <Separator />
+        {/* <SocialLogin /> */}
+        {/* <Separator /> */}
         <Suspense>
           <LoginForm />
         </Suspense>

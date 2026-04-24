@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { RegisterForm } from '@/components/auth/register-form'
-import { SocialLogin } from '@/components/auth/social-login'
 import { Separator } from '@/components/ui/separator'
 
 export default function RegisterPage() {
@@ -18,7 +17,7 @@ export default function RegisterPage() {
             Cadastre-se para comprar e vender de forma simples e segura
           </p>
         </div>
-        <SocialLogin />
+        {/* <SocialLogin /> */}
         <Separator />
         <RegisterForm />
         <p className="text-sm text-muted-foreground text-center">

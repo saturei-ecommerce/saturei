@@ -9,14 +9,14 @@ next.js web client for the saturei marketplace
 * [ ] listing creation form (title, description, photos, condition, price) — pedro
 * [ ] listing management page (edit, pause, delete) — pedro
 * [x] search page with filters (keyword, price range, location, category) — vini hen
-* [ ] listing detail page — vini bel
-* [ ] cart and checkout flow (payment method, shipping) — vini bel
+* [x] listing detail page — vini bel
+* [x] cart and checkout flow (payment method, shipping) — vini bel
 * [x] real-time chat ui (buyer ↔ seller) — vini hen
-* [ ] user profile and reputation (ratings display) — vini bel
+* [x] user profile and reputation (ratings display) — vini bel
 * [ ] responsive layout (mobile + desktop) — pedro
 
 ### infra & devops
-* [ ] dockerfile — richard
-* [ ] .env.example with required environment variables — vini hen
-* [ ] github actions — ci (lint + build on pull request) — richard
-* [ ] github actions — cd (deploy on push to main) — pedro
+* [x] dockerfile — richard
+* [x] .env.example with required environment variables — vini hen
+* [x] github actions — ci (lint + build on pull request) — richard
+* [x] github actions — cd (deploy on push to main) — pedro
