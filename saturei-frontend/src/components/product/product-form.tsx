@@ -22,7 +22,7 @@ const productSchema = z.object({
     .string()
     .min(1, 'preço é obrigatório')
     .refine((val) => Number(val) > 0, 'preço deve ser maior que zero'),
-  conservationState: z.enum(['USADO', 'NOVO']),
+  conservationState: z.enum(['USED', 'NEW']),
   category: z.string().min(1, 'categoria é obrigatória'),
   location: z.string().min(1, 'localização é obrigatória'),
   imageUrls: z.array(z.string()).min(1, 'adicione pelo menos uma foto'),
@@ -85,8 +85,8 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
-  const [conservationState, setConservationState] = useState<'USADO' | 'NOVO'>(
-    'USADO',
+  const [conservationState, setConservationState] = useState<'USED' | 'NEW'>(
+    'USED',
   )
   const [category, setCategory] = useState('')
   const [location, setLocation] = useState('')
@@ -255,10 +255,10 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
         <RadioGroup.Root
           className="flex items-center gap-8"
           value={conservationState}
-          onValueChange={(val) => setConservationState(val as 'USADO' | 'NOVO')}
+          onValueChange={(val) => setConservationState(val as 'USED' | 'NEW')}
         >
-          <RadioItem value="USADO" id="usado" label="produto usado" />
-          <RadioItem value="NOVO" id="novo" label="produto novo" />
+          <RadioItem value="USED" id="usado" label="produto usado" />
+          <RadioItem value="NEW" id="novo" label="produto novo" />
         </RadioGroup.Root>
 
         <Separator />
