@@ -38,6 +38,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/listings/me").authenticated()
                         // Public search: GET /listings, GET /listings/{id}, GET /listings/categories, etc.
                         .requestMatchers(HttpMethod.GET, "/listings", "/listings/**").permitAll()
+                        // Uploaded listing images served as static files
+                        .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                         // Everything else requires authentication
                         .anyRequest().authenticated()
                 )
