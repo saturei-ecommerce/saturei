@@ -4,7 +4,7 @@ import ky from 'ky'
 import { env } from '@/env'
 
 export const api = ky.create({
-  baseUrl: env.API_BASE_URL,
+  baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
   hooks: {
     beforeRequest: [
       async ({ request }) => {

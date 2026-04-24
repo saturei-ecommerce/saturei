@@ -6,7 +6,7 @@ const envSchema = z.object({
     .default('development'),
 
   NEXT_PUBLIC_WEB_BASE_URL: z.url(),
-  API_BASE_URL: z.url(),
+  NEXT_PUBLIC_API_BASE_URL: z.url(),
 
   GITHUB_CLIENT_ID: z.string().optional(),
   GITHUB_CLIENT_SECRET: z.string().optional(),
