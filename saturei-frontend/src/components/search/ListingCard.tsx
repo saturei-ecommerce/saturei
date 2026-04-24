@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import type { ListingResponse } from '@/lib/api/listings'
+import { getImageUrl } from '@/lib/utils'
 
 // Skeleton
 
@@ -82,7 +83,7 @@ export function ListingCard({ listing }: ListingCardProps) {
       <div className="relative h-52 shrink-0 bg-muted overflow-hidden">
         {hasImage ? (
           <Image
-            src={imageUrls[0]}
+            src={getImageUrl(imageUrls[0])}
             alt={title}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"

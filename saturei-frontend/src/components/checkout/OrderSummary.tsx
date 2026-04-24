@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useMemo } from 'react'
 import { formatBRL } from '@/lib/formatters/currency'
 import { useCartStore } from '@/stores/cart'
+import { getImageUrl } from '@/lib/utils'
 
 export function OrderSummary() {
   const items = useCartStore((s) => s.items)
@@ -24,7 +25,7 @@ export function OrderSummary() {
             <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-[var(--muted-bg)] border border-[var(--border)] shrink-0">
               {it.image ? (
                 <Image
-                  src={it.image}
+                  src={getImageUrl(it.image)}
                   alt={it.title}
                   fill
                   className="object-cover"

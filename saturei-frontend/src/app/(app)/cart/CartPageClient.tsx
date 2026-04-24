@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { formatBRL } from '@/lib/formatters/currency'
 import { useCartStore } from '@/stores/cart'
+import { getImageUrl } from '@/lib/utils'
 
 export function CartPageClient() {
   const [mounted, setMounted] = useState(false)
@@ -105,7 +106,7 @@ export function CartPageClient() {
                 <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-[var(--muted-bg)] border border-[var(--border)] shrink-0">
                   {it.image ? (
                     <Image
-                      src={it.image}
+                      src={getImageUrl(it.image)}
                       alt={it.title}
                       fill
                       className="object-cover"

@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useMemo, useState } from 'react'
+import { getImageUrl } from '@/lib/utils'
 
 export function ListingGallery({
   title,
@@ -24,7 +25,7 @@ export function ListingGallery({
         <div className="relative aspect-[4/3] bg-gradient-to-br from-[var(--primary-50)] to-[var(--primary-100)]">
           {activeUrl ? (
             <Image
-              src={activeUrl}
+              src={getImageUrl(activeUrl)}
               alt={title}
               fill
               className="object-cover"
@@ -57,7 +58,7 @@ export function ListingGallery({
               `}
             >
               <Image
-                src={url}
+                src={getImageUrl(url)}
                 alt={`${title} — miniatura ${idx + 1}`}
                 fill
                 className="object-cover"

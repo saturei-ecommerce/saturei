@@ -5,6 +5,7 @@ import { ListingGallery } from '@/components/listing/ListingGallery'
 import { ListingInfo } from '@/components/listing/ListingInfo'
 import { SellerInfo } from '@/components/listing/SellerInfo'
 import { useCartStore } from '@/stores/cart'
+import { getImageUrl } from '@/lib/utils'
 
 export function ListingPageClient({ listing }: { listing: ListingResponse }) {
   const addItem = useCartStore((s) => s.addItem)
@@ -35,7 +36,7 @@ export function ListingPageClient({ listing }: { listing: ListingResponse }) {
                       id: listing.id,
                       title: listing.title,
                       price: listing.price,
-                      image: listing.imageUrls?.[0],
+                      image: getImageUrl(listing.imageUrls?.[0]),
                     },
                     1,
                   )
