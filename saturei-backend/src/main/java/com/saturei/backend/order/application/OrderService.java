@@ -27,7 +27,7 @@ public class OrderService {
     private final JpaOrderRepository orderRepository;
     private final JpaUserRepository userRepository;
     private final JpaListingRepository listingRepository;
-    private final PaymentGatewayPortImpl paymentGateway;
+    private final PaymentGatewayPort paymentGateway;
 
     @Transactional
     public OrderResponse create(CreateOrderRequest request, UUID buyerId) {
